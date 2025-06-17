@@ -1,14 +1,11 @@
-import Home from "./components/home/home"
+import Registration from "./components/registration/Registration";
 
 function App() {
- 
-
   return (
-   <>
-    <Home/>
-
-   </>
-  )
+    <>
+      <Registration />
+    </>
+  );
 }
 
-export default App
+export default App;
