@@ -15,31 +15,33 @@ const Registration = () => {
             Free register and you can enjoy it
           </p>
 
-          <div className="w-[368px] flex flex-col gap-[56px]"> {/* adds spacing between inputs */}
+          <div className="w-[368px] flex flex-col gap-[56px]">
+            {" "}
+            {/* adds spacing between inputs */}
             <TextField
               label="Email Address"
               variant="outlined"
               type="text"
               fullWidth
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '& fieldset': {
-                    borderColor: '#ccc',
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  "& fieldset": {
+                    borderColor: "#ccc",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#6366f1', // Tailwind indigo-500
+                  "&:hover fieldset": {
+                    borderColor: "#6366f1", // Tailwind indigo-500
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#4ade80', // Tailwind green-400
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#4ade80", // Tailwind green-400
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  fontSize: '16px',
-                  color: '#6b7280', // gray-500
+                "& .MuiInputLabel-root": {
+                  fontSize: "16px",
+                  color: "#6b7280", // gray-500
                 },
-                '& .Mui-focused .MuiInputLabel-root': {
-                  color: '#4ade80',
+                "& .Mui-focused .MuiInputLabel-root": {
+                  color: "#4ade80",
                 },
               }}
             />
@@ -49,24 +51,24 @@ const Registration = () => {
               type="text"
               fullWidth
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '& fieldset': {
-                    borderColor: '#ccc',
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  "& fieldset": {
+                    borderColor: "#ccc",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#6366f1',
+                  "&:hover fieldset": {
+                    borderColor: "#6366f1",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#4ade80',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#4ade80",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  fontSize: '16px',
-                  color: '#6b7280',
+                "& .MuiInputLabel-root": {
+                  fontSize: "16px",
+                  color: "#6b7280",
                 },
-                '& .Mui-focused .MuiInputLabel-root': {
-                  color: '#4ade80',
+                "& .Mui-focused .MuiInputLabel-root": {
+                  color: "#4ade80",
                 },
               }}
             />
@@ -76,24 +78,24 @@ const Registration = () => {
               type="password"
               fullWidth
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '& fieldset': {
-                    borderColor: '#ccc',
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  "& fieldset": {
+                    borderColor: "#ccc",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#6366f1',
+                  "&:hover fieldset": {
+                    borderColor: "#6366f1",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#4ade80',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#4ade80",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  fontSize: '16px',
-                  color: '#6b7280',
+                "& .MuiInputLabel-root": {
+                  fontSize: "16px",
+                  color: "#6b7280",
                 },
-                '& .Mui-focused .MuiInputLabel-root': {
-                  color: '#4ade80',
+                "& .Mui-focused .MuiInputLabel-root": {
+                  color: "#4ade80",
                 },
               }}
             />
@@ -101,7 +103,11 @@ const Registration = () => {
         </div>
 
         <div className="w-[684px]">
-          <img src={regi_image} className="h-screen object-cover" alt="regi_image" />
+          <img
+            src={regi_image}
+            className="h-screen object-cover"
+            alt="regi_image"
+          />
         </div>
       </div>
     </Container>
