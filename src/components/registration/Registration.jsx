@@ -2,45 +2,50 @@ import Container from "../layout/Container";
 import regi_image from "../../assets/registration.png";
 import { TextField } from "@mui/material";
 import { useState } from "react";
+import { IoIosEyeOff } from "react-icons/io";
+import { IoIosEye } from "react-icons/io";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
 
-  const [emailerror,setEmailerror] = useState("");
-  const [nameerror,setNameerror] = useState("");
-  const [passworderror,setPassworderror] = useState("");
+  const [emailerror, setEmailerror] = useState("");
+  const [nameerror, setNameerror] = useState("");
+  const [passworderror, setPassworderror] = useState("");
 
+  const [show,setShow] = useState(false);
 
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setEmailerror("")
+    setEmailerror("");
   };
 
   const handleFullName = (e) => {
     setFullname(e.target.value);
-    setNameerror("")
+    setNameerror("");
   };
 
   const handlePassword = (e) => {
-    setFullname(e.target.value);
-    setPassworderror("")
+    setPassword(e.target.value);
+    setPassworderror("");
   };
 
-
-
   const submitRegistration = () => {
-    console.log(email);
-    if (!email) {
-      setEmailerror("bhai tui email de");
+
+    if (!email) { 
+      setEmailerror("Enter your email address");
+    }else{
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+          setEmailerror("Enter valid email");
+        }
     }
     if (!fullname) {
-      setNameerror("bhai tui name de");
+      setNameerror("Give your name");
     }
-      if (!password) {
-      setPassworderror("bhai tui password de");
+    if (!password) {
+      setPassworderror("Enter your password");
     }
   };
 
@@ -88,11 +93,21 @@ const Registration = () => {
                   "& .Mui-focused .MuiInputLabel-root": {
                     color: "#4ade80",
                   },
+                  "& label.MuiInputLabel-shrink": {
+                    top: "1px",
+                    left: "1px",
+                    fontSize: "16px",
+                    color: "#11175D",
+                    backgroundColor: "#fff",
+                    padding: "0 12px",
+                    letterSpacing: "3px",
+                  },
                 }}
               />
 
-              <p className="text-red-600 absolute bottom-[-25px] left-0">{emailerror}</p>
-           
+              <p className="text-red-600 absolute bottom-[-25px] left-0">
+                {emailerror}
+              </p>
             </div>
 
             <div className="mb-[56px] relative">
@@ -126,17 +141,32 @@ const Registration = () => {
                   "& .Mui-focused .MuiInputLabel-root": {
                     color: "#4ade80",
                   },
+                  "& label.MuiInputLabel-shrink": {
+                    top: "1px",
+                    left: "1px",
+                    fontSize: "16px",
+                    color: "#11175D",
+                    backgroundColor: "#fff",
+                    padding: "0 12px",
+                    letterSpacing: "3px",
+                  },
                 }}
               />
-              <p className="text-red-600 absolute bottom-[-25px] left-0">{nameerror}</p>
+              <p className="text-red-600 absolute bottom-[-25px] left-0">
+                {nameerror}
+              </p>
             </div>
 
             <div className="relative">
-             
+                {
+                  show ? <IoIosEye onClick={()=>setShow(!show)} className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]" size={25} />:<IoIosEyeOff onClick={()=>setShow(!show)} className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]" size={25} /> 
+                }
+
               <TextField
+            
                 label="Password"
                 variant="outlined"
-                type="password"
+                type={show?"text":"password"}
                 fullWidth
                 onChange={handlePassword}
                 sx={{
@@ -163,17 +193,33 @@ const Registration = () => {
                   "& .Mui-focused .MuiInputLabel-root": {
                     color: "#4ade80",
                   },
+                  "& label.MuiInputLabel-shrink": {
+                    top: "1px",
+                    left: "1px",
+                    fontSize: "16px",
+                    color: "#11175D",
+                    backgroundColor: "#fff",
+                    padding: "0 12px",
+                    letterSpacing: "3px",
+                  },
                 }}
+                
               />
-              <p className="text-red-600 absolute bottom-[-25px] left-0">{passworderror}</p>
+              <p className="text-red-600 absolute bottom-[-25px] left-0">
+                {passworderror}
+              </p>
+               
             </div>
 
-            <button
+       
+             <button
               onClick={submitRegistration}
               className="relative py-[19px] w-full bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[86px] after:content-[''] after:absolute after:w-[71px] after:h-[28px] after:rounded-[86px] after:bg-[#5B36F5] after:top-1/2 after:left-1/2 after:blur-[43px] after:-translate-1/2 after:-z-1 z-1 cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] mt-[52px]"
             >
               Sign up
             </button>
+          
+        
 
             <p className="mt-[35px] text-center text-[#03014C] font-secondary text-[13px]">
               Already have an account ?{" "}
