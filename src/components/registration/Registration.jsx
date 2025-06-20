@@ -17,6 +17,14 @@ const Registration = () => {
   const [show,setShow] = useState(false);
 
 
+  const [emailvalid,setEmailvalid] = useState(false)
+  const [namevalid,setNamevalid] = useState(false)
+  const [passwordvalid,setPasswordvalid] = useState(false)
+
+
+
+
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setEmailerror("");
@@ -36,17 +44,46 @@ const Registration = () => {
 
     if (!email) { 
       setEmailerror("Enter your email address");
+      setEmailvalid(false)
     }else{
         if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
           setEmailerror("Enter valid email");
+          setEmailvalid(false)
+        }else{
+          setEmailvalid(true);
         }
+
     }
     if (!fullname) {
       setNameerror("Give your name");
+      setNamevalid(false)
+    }else{
+      setNamevalid(true)
     }
+
     if (!password) {
       setPassworderror("Enter your password");
+      setPasswordvalid(false)
+    }else{
+      if(!/(?=.*[a-z])/.test(password)){
+        setPassworderror("Lowercase alphabetical character");
+        setPasswordvalid(false)
+      }else if(!/(?=.*[A-Z])/.test(password)){
+        setPassworderror("Uppercase alphabetical character");
+        setPasswordvalid(false)
+      }else if(!/(?=.*[0-9])/.test(password)){
+        setPassworderror("Numeric character");
+        setPasswordvalid(false)
+
+      }else{
+        setPasswordvalid(true)
+      }
+
     }
+
+   
+
+
   };
 
   return (
@@ -73,8 +110,9 @@ const Registration = () => {
                     borderRadius: "8px",
 
                     "& fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                      borderColor: emailvalid ? "green": "#11175D",
+                      borderWidth:"2px",
+                      opacity:emailvalid?"1": "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
@@ -121,8 +159,9 @@ const Registration = () => {
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                      borderColor:namevalid?"green": "#11175D",
+                       borderWidth:"2px",
+                      opacity:namevalid?"green": "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
@@ -173,8 +212,9 @@ const Registration = () => {
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                      borderColor: passwordvalid ? "green": "#11175D",
+                      borderWidth:"2px",
+                      opacity:  passwordvalid ? "green": "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
