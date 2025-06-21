@@ -14,16 +14,11 @@ const Registration = () => {
   const [nameerror, setNameerror] = useState("");
   const [passworderror, setPassworderror] = useState("");
 
-  const [show,setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-
-  const [emailvalid,setEmailvalid] = useState(false)
-  const [namevalid,setNamevalid] = useState(false)
-  const [passwordvalid,setPasswordvalid] = useState(false)
-
-
-
-
+  const [emailvalid, setEmailvalid] = useState(false);
+  const [namevalid, setNamevalid] = useState(false);
+  const [passwordvalid, setPasswordvalid] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -41,49 +36,41 @@ const Registration = () => {
   };
 
   const submitRegistration = () => {
-
-    if (!email) { 
+    if (!email) {
       setEmailerror("Enter your email address");
-      setEmailvalid(false)
-    }else{
-        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-          setEmailerror("Enter valid email");
-          setEmailvalid(false)
-        }else{
-          setEmailvalid(true);
-        }
-
+      setEmailvalid(false);
+    } else {
+      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        setEmailerror("Enter valid email");
+        setEmailvalid(false);
+      } else {
+        setEmailvalid(true);
+      }
     }
     if (!fullname) {
       setNameerror("Give your name");
-      setNamevalid(false)
-    }else{
-      setNamevalid(true)
+      setNamevalid(false);
+    } else {
+      setNamevalid(true);
     }
 
     if (!password) {
       setPassworderror("Enter your password");
-      setPasswordvalid(false)
-    }else{
-      if(!/(?=.*[a-z])/.test(password)){
+      setPasswordvalid(false);
+    } else {
+      if (!/(?=.*[a-z])/.test(password)) {
         setPassworderror("Lowercase alphabetical character");
-        setPasswordvalid(false)
-      }else if(!/(?=.*[A-Z])/.test(password)){
+        setPasswordvalid(false);
+      } else if (!/(?=.*[A-Z])/.test(password)) {
         setPassworderror("Uppercase alphabetical character");
-        setPasswordvalid(false)
-      }else if(!/(?=.*[0-9])/.test(password)){
+        setPasswordvalid(false);
+      } else if (!/(?=.*[0-9])/.test(password)) {
         setPassworderror("Numeric character");
-        setPasswordvalid(false)
-
-      }else{
-        setPasswordvalid(true)
+        setPasswordvalid(false);
+      } else {
+        setPasswordvalid(true);
       }
-
     }
-
-   
-
-
   };
 
   return (
@@ -110,9 +97,9 @@ const Registration = () => {
                     borderRadius: "8px",
 
                     "& fieldset": {
-                      borderColor: emailvalid ? "green": "#11175D",
-                      borderWidth:"2px",
-                      opacity:emailvalid?"1": "0.3",
+                      borderColor: emailvalid ? "green" : "#11175D",
+                      borderWidth: "2px",
+                      opacity: emailvalid ? "1" : "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
@@ -159,9 +146,9 @@ const Registration = () => {
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "8px",
                     "& fieldset": {
-                      borderColor:namevalid?"green": "#11175D",
-                       borderWidth:"2px",
-                      opacity:namevalid?"green": "0.3",
+                      borderColor: namevalid ? "green" : "#11175D",
+                      borderWidth: "2px",
+                      opacity: namevalid ? "green" : "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
@@ -197,24 +184,33 @@ const Registration = () => {
             </div>
 
             <div className="relative">
-                {
-                  show ? <IoIosEye onClick={()=>setShow(!show)} className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]" size={25} />:<IoIosEyeOff onClick={()=>setShow(!show)} className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]" size={25} /> 
-                }
+              {show ? (
+                <IoIosEye
+                  onClick={() => setShow(!show)}
+                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                  size={25}
+                />
+              ) : (
+                <IoIosEyeOff
+                  onClick={() => setShow(!show)}
+                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                  size={25}
+                />
+              )}
 
               <TextField
-            
                 label="Password"
                 variant="outlined"
-                type={show?"text":"password"}
+                type={show ? "text" : "password"}
                 fullWidth
                 onChange={handlePassword}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: passwordvalid ? "green": "#11175D",
-                      borderWidth:"2px",
-                      opacity:  passwordvalid ? "green": "0.3",
+                      borderColor: passwordvalid ? "green" : "#11175D",
+                      borderWidth: "2px",
+                      opacity: passwordvalid ? "green" : "0.3",
                     },
                     "&:hover fieldset": {
                       borderColor: "#11175D",
@@ -243,23 +239,18 @@ const Registration = () => {
                     letterSpacing: "3px",
                   },
                 }}
-                
               />
               <p className="text-red-600 absolute bottom-[-25px] left-0">
                 {passworderror}
               </p>
-               
             </div>
 
-       
-             <button
+            <button
               onClick={submitRegistration}
               className="relative py-[19px] w-full bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[86px] after:content-[''] after:absolute after:w-[71px] after:h-[28px] after:rounded-[86px] after:bg-[#5B36F5] after:top-1/2 after:left-1/2 after:blur-[43px] after:-translate-1/2 after:-z-1 z-1 cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] mt-[52px]"
             >
               Sign up
             </button>
-          
-        
 
             <p className="mt-[35px] text-center text-[#03014C] font-secondary text-[13px]">
               Already have an account ?{" "}
