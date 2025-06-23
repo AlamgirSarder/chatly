@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
+import { Link } from "react-router";
 
 
 const Login = () => {
@@ -233,9 +234,9 @@ const Login = () => {
             <p className="mt-[35px] text-[#03014C] font-secondary text-[13px]">
         
               Don't have an account ? {" "}
-              <span className="text-[#EA6C00] font-secondary font-bold text-[13px]">
+              <Link to="/registration" className="text-[#EA6C00] font-secondary font-bold text-[13px]">
                Sign up
-              </span>
+              </Link>
             </p>
           </div>
         </div>
