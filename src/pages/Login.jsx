@@ -1,11 +1,13 @@
-import Container from "../layout/Container";
-import regi_image from "../../assets/registration.png";
+
+import Container from "../components/layout/Container";
+import login_image from "../assets/login.jpg";
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
 
-const Registration = () => {
+
+const Login = () => {
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
@@ -71,6 +73,19 @@ const Registration = () => {
         setPasswordvalid(true);
       }
     }
+
+    if(email && fullname && password){
+      console.log("Registration Successful");
+      setEmail("")
+      setFullname("")
+      setPassword("")
+      
+    }
+
+
+
+
+
   };
 
   return (
@@ -90,6 +105,7 @@ const Registration = () => {
                 label="Email Address"
                 variant="outlined"
                 type="text"
+                value={email}
                 fullWidth
                 onChange={handleEmail}
                 sx={{
@@ -140,6 +156,7 @@ const Registration = () => {
                 label="Full Name"
                 variant="outlined"
                 type="text"
+                value={fullname}
                 fullWidth
                 onChange={handleFullName}
                 sx={{
@@ -202,6 +219,7 @@ const Registration = () => {
                 label="Password"
                 variant="outlined"
                 type={show ? "text" : "password"}
+                value={password}
                 fullWidth
                 onChange={handlePassword}
                 sx={{
@@ -263,7 +281,7 @@ const Registration = () => {
 
         <div className="w-[684px]">
           <img
-            src={regi_image}
+            src={login_image}
             className="h-screen object-cover"
             alt="regi_image"
           />
@@ -273,4 +291,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default Login;

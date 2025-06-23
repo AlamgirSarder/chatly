@@ -1,9 +1,30 @@
-import Registration from "./components/registration/Registration";
+
+
+import { createBrowserRouter,RouterProvider } from "react-router";
+import Registration from "./pages/Registration";
+import Login from "./pages/Login";
+
+const router = createBrowserRouter([
+  {
+    path:"/registration",
+    element: <Registration/>
+  },
+   {
+    path:"/login",
+    element: <Login/>
+  },
+  
+],  {
+    basename: "/chating-application",
+  }
+
+)
+
 
 function App() {
   return (
     <>
-      <Registration />
+     <RouterProvider router={router} />
     </>
   );
 }
