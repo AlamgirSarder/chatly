@@ -185,13 +185,13 @@ const Registration = () => {
 
             <div className="relative">
               {show ? (
-                <IoIosEye
+                <IoIosEyeOff
                   onClick={() => setShow(!show)}
                   className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
                   size={25}
                 />
               ) : (
-                <IoIosEyeOff
+                <IoIosEye
                   onClick={() => setShow(!show)}
                   className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
                   size={25}
