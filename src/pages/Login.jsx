@@ -1,6 +1,8 @@
 
 import Container from "../components/layout/Container";
 import login_image from "../assets/login.jpg";
+import google_image from "../assets/google.png";
+
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import { IoIosEyeOff } from "react-icons/io";
@@ -92,12 +94,12 @@ const Login = () => {
     <Container>
       <div className="flex justify-between">
         <div className="w-[756px] pt-[120px] pl-[120px]">
-          <h2 className="font-primary text-primary text-[35px] font-bold mb-[13px]">
-            Get started with easily register
+          <h2 className="font-secondary text-[#03014C] text-[33px] font-bold mb-[30px]">
+            Login to your account!
           </h2>
-          <p className="font-primary text-black/50 text-[21px] mb-[61px]">
-            Free register and you can enjoy it
-          </p>
+
+          <button className="flex items-center font-secondary rounded-[8.34px] border-[#03014C]/30 py-[23px] border-2 pl-[29px] pr-[42px] text-[13px] font-semibold tracking-[2%] mb-[32px]"> <img className="mr-[10px] size-[19.26px]" src={google_image} alt="#google_image" />Login with Google</button>
+       
 
           <div className="w-[368px]">
             <div className="mb-[56px] relative">
@@ -110,19 +112,22 @@ const Login = () => {
                 onChange={handleEmail}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
+                    borderRadius: "0px",
 
                     "& fieldset": {
-                      borderColor: emailvalid ? "green" : "#11175D",
+                        borderTop:"none",
+                        borderLeft:"none",
+                        borderRight:"none",
+                      borderBottomColor: emailvalid ? "green" : "#11175D",
                       borderWidth: "2px",
                       opacity: emailvalid ? "1" : "0.3",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#11175D",
+                      borderBottomColor: "#11175D",
                       opacity: "0.3",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
+                      borderBottomColor: "#11175D",
                       opacity: "0.3",
                     },
                   },
@@ -151,66 +156,17 @@ const Login = () => {
               </p>
             </div>
 
-            <div className="mb-[56px] relative">
-              <TextField
-                label="Full Name"
-                variant="outlined"
-                type="text"
-                value={fullname}
-                fullWidth
-                onChange={handleFullName}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
-                    "& fieldset": {
-                      borderColor: namevalid ? "green" : "#11175D",
-                      borderWidth: "2px",
-                      opacity: namevalid ? "green" : "0.3",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                    color: "#11175D",
-                    opacity: "0.7",
-                  },
-                  "& .Mui-focused .MuiInputLabel-root": {
-                    color: "#4ade80",
-                  },
-                  "& label.MuiInputLabel-shrink": {
-                    top: "1px",
-                    left: "1px",
-                    fontSize: "16px",
-                    color: "#11175D",
-                    backgroundColor: "#fff",
-                    padding: "0 12px",
-                    letterSpacing: "3px",
-                  },
-                }}
-              />
-              <p className="text-red-600 absolute bottom-[-25px] left-0">
-                {nameerror}
-              </p>
-            </div>
-
             <div className="relative">
               {show ? (
                 <IoIosEyeOff
                   onClick={() => setShow(!show)}
-                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1] text-[#03014C]/30"
                   size={25}
                 />
               ) : (
                 <IoIosEye
                   onClick={() => setShow(!show)}
-                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1] text-[#03014C]/30"
                   size={25}
                 />
               )}
@@ -223,19 +179,23 @@ const Login = () => {
                 fullWidth
                 onChange={handlePassword}
                 sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
+                   "& .MuiOutlinedInput-root": {
+                    borderRadius: "0px",
+
                     "& fieldset": {
-                      borderColor: passwordvalid ? "green" : "#11175D",
+                        borderTop:"none",
+                        borderLeft:"none",
+                        borderRight:"none",
+                      borderBottomColor: emailvalid ? "green" : "#11175D",
                       borderWidth: "2px",
-                      opacity: passwordvalid ? "green" : "0.3",
+                      opacity: emailvalid ? "1" : "0.3",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#11175D",
+                      borderBottomColor: "#11175D",
                       opacity: "0.3",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
+                      borderBottomColor: "#11175D",
                       opacity: "0.3",
                     },
                   },
@@ -265,15 +225,16 @@ const Login = () => {
 
             <button
               onClick={submitRegistration}
-              className="relative py-[19px] w-full bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[86px] after:content-[''] after:absolute after:w-[71px] after:h-[28px] after:rounded-[86px] after:bg-[#5B36F5] after:top-1/2 after:left-1/2 after:blur-[43px] after:-translate-1/2 after:-z-1 z-1 cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] mt-[52px]"
+              className="relative py-[19px] w-full bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[8.71px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] mt-[52px]"
             >
-              Sign up
+              Login to Continue
             </button>
 
-            <p className="mt-[35px] text-center text-[#03014C] font-secondary text-[13px]">
-              Already have an account ?{" "}
+            <p className="mt-[35px] text-[#03014C] font-secondary text-[13px]">
+        
+              Don't have an account ? {" "}
               <span className="text-[#EA6C00] font-secondary font-bold text-[13px]">
-                Sign In
+               Sign up
               </span>
             </p>
           </div>
