@@ -11,10 +11,13 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
+import { ColorRing } from "react-loader-spinner";
 
 const Registration = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+
+  const [loader, setLoader] = useState(false);
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
@@ -90,6 +93,7 @@ const Registration = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           toast.success("Registration Successful. Please verify your email");
+          setLoader(true);
           sendEmailVerification(auth.currentUser);
           setTimeout(() => {
             navigate("/login");
@@ -138,174 +142,195 @@ const Registration = () => {
               // transition={Bounce}
             />
 
-            <div className="mb-[56px] relative">
-              <TextField
-                label="Email Address"
-                variant="outlined"
-                type="text"
-                value={email}
-                fullWidth
-                onChange={handleEmail}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
+            <div className="">
+              <div className="mb-[56px] relative">
+                <TextField
+                  label="Email Address"
+                  variant="outlined"
+                  type="text"
+                  value={email}
+                  fullWidth
+                  onChange={handleEmail}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "8px",
 
-                    "& fieldset": {
-                      borderColor: emailvalid ? "green" : "#11175D",
-                      borderWidth: "2px",
-                      opacity: emailvalid ? "1" : "0.3",
+                      "& fieldset": {
+                        borderColor: emailvalid ? "green" : "#11175D",
+                        borderWidth: "2px",
+                        opacity: emailvalid ? "1" : "0.3",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
                     },
-                    "&:hover fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                    "& .MuiInputLabel-root": {
+                      fontSize: "14px",
+                      color: "#11175D",
+                      opacity: "0.7",
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                    "& .Mui-focused .MuiInputLabel-root": {
+                      color: "#4ade80",
                     },
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                    color: "#11175D",
-                    opacity: "0.7",
-                  },
-                  "& .Mui-focused .MuiInputLabel-root": {
-                    color: "#4ade80",
-                  },
-                  "& label.MuiInputLabel-shrink": {
-                    top: "1px",
-                    left: "1px",
-                    fontSize: "16px",
-                    color: "#11175D",
-                    backgroundColor: "#fff",
-                    padding: "0 12px",
-                    letterSpacing: "3px",
-                  },
-                }}
-              />
-
-              <p className="text-red-600 absolute bottom-[-25px] left-0">
-                {emailerror}
-              </p>
-            </div>
-
-            <div className="mb-[56px] relative">
-              <TextField
-                label="Full Name"
-                variant="outlined"
-                type="text"
-                value={fullname}
-                fullWidth
-                onChange={handleFullName}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
-                    "& fieldset": {
-                      borderColor: namevalid ? "green" : "#11175D",
-                      borderWidth: "2px",
-                      opacity: namevalid ? "green" : "0.3",
+                    "& label.MuiInputLabel-shrink": {
+                      top: "1px",
+                      left: "1px",
+                      fontSize: "16px",
+                      color: "#11175D",
+                      backgroundColor: "#fff",
+                      padding: "0 12px",
+                      letterSpacing: "3px",
                     },
-                    "&:hover fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                    color: "#11175D",
-                    opacity: "0.7",
-                  },
-                  "& .Mui-focused .MuiInputLabel-root": {
-                    color: "#4ade80",
-                  },
-                  "& label.MuiInputLabel-shrink": {
-                    top: "1px",
-                    left: "1px",
-                    fontSize: "16px",
-                    color: "#11175D",
-                    backgroundColor: "#fff",
-                    padding: "0 12px",
-                    letterSpacing: "3px",
-                  },
-                }}
-              />
-              <p className="text-red-600 absolute bottom-[-25px] left-0">
-                {nameerror}
-              </p>
-            </div>
-
-            <div className="relative">
-              {show ? (
-                <IoIosEyeOff
-                  onClick={() => setShow(!show)}
-                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
-                  size={25}
+                  }}
                 />
-              ) : (
-                <IoIosEye
-                  onClick={() => setShow(!show)}
-                  className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
-                  size={25}
-                />
-              )}
 
-              <TextField
-                label="Password"
-                variant="outlined"
-                type={show ? "text" : "password"}
-                value={password}
-                fullWidth
-                onChange={handlePassword}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "8px",
-                    "& fieldset": {
-                      borderColor: passwordvalid ? "green" : "#11175D",
-                      borderWidth: "2px",
-                      opacity: passwordvalid ? "green" : "0.3",
+                <p className="text-red-600 absolute bottom-[-25px] left-0">
+                  {emailerror}
+                </p>
+              </div>
+
+              <div className="mb-[56px] relative">
+                <TextField
+                  label="Full Name"
+                  variant="outlined"
+                  type="text"
+                  value={fullname}
+                  fullWidth
+                  onChange={handleFullName}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "8px",
+                      "& fieldset": {
+                        borderColor: namevalid ? "green" : "#11175D",
+                        borderWidth: "2px",
+                        opacity: namevalid ? "green" : "0.3",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
                     },
-                    "&:hover fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                    "& .MuiInputLabel-root": {
+                      fontSize: "14px",
+                      color: "#11175D",
+                      opacity: "0.7",
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#11175D",
-                      opacity: "0.3",
+                    "& .Mui-focused .MuiInputLabel-root": {
+                      color: "#4ade80",
                     },
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                    color: "#11175D",
-                    opacity: "0.7",
-                  },
-                  "& .Mui-focused .MuiInputLabel-root": {
-                    color: "#4ade80",
-                  },
-                  "& label.MuiInputLabel-shrink": {
-                    top: "1px",
-                    left: "1px",
-                    fontSize: "16px",
-                    color: "#11175D",
-                    backgroundColor: "#fff",
-                    padding: "0 12px",
-                    letterSpacing: "3px",
-                  },
-                }}
-              />
-              <p className="text-red-600 absolute bottom-[-25px] left-0">
-                {passworderror}
-              </p>
+                    "& label.MuiInputLabel-shrink": {
+                      top: "1px",
+                      left: "1px",
+                      fontSize: "16px",
+                      color: "#11175D",
+                      backgroundColor: "#fff",
+                      padding: "0 12px",
+                      letterSpacing: "3px",
+                    },
+                  }}
+                />
+                <p className="text-red-600 absolute bottom-[-25px] left-0">
+                  {nameerror}
+                </p>
+              </div>
+
+              <div className="relative">
+                {show ? (
+                  <IoIosEyeOff
+                    onClick={() => setShow(!show)}
+                    className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                    size={25}
+                  />
+                ) : (
+                  <IoIosEye
+                    onClick={() => setShow(!show)}
+                    className="absolute top-1/2 right-0 -translate-1/2 cursor-pointer z-[1]"
+                    size={25}
+                  />
+                )}
+
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  type={show ? "text" : "password"}
+                  value={password}
+                  fullWidth
+                  onChange={handlePassword}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "8px",
+                      "& fieldset": {
+                        borderColor: passwordvalid ? "green" : "#11175D",
+                        borderWidth: "2px",
+                        opacity: passwordvalid ? "green" : "0.3",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#11175D",
+                        opacity: "0.3",
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      fontSize: "14px",
+                      color: "#11175D",
+                      opacity: "0.7",
+                    },
+                    "& .Mui-focused .MuiInputLabel-root": {
+                      color: "#4ade80",
+                    },
+                    "& label.MuiInputLabel-shrink": {
+                      top: "1px",
+                      left: "1px",
+                      fontSize: "16px",
+                      color: "#11175D",
+                      backgroundColor: "#fff",
+                      padding: "0 12px",
+                      letterSpacing: "3px",
+                    },
+                  }}
+                />
+                <p className="text-red-600 absolute bottom-[-25px] left-0">
+                  {passworderror}
+                </p>
+              </div>
             </div>
 
             <button
               onClick={submitRegistration}
               className="relative py-[19px] w-full bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[86px] after:content-[''] after:absolute after:w-[71px] after:h-[28px] after:rounded-[86px] after:bg-[#5B36F5] after:top-1/2 after:left-1/2 after:blur-[43px] after:-translate-1/2 after:-z-1 z-1 cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] mt-[52px]"
             >
-              Sign up
+              {" "}
+              {loader ? (
+                <div className="flex justify-center items-center">
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    colors={[
+                      "#e15b64",
+                      "#f47e60",
+                      "#f8b26a",
+                      "#abbd81",
+                      "#849b87",
+                    ]}
+                  />
+                </div>
+              ) : (
+                "Sign up"
+              )}
             </button>
 
             <p className="mt-[35px] text-center text-[#03014C] font-secondary text-[13px]">
