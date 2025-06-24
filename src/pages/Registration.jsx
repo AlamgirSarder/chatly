@@ -1,14 +1,20 @@
-
 import Container from "../components/layout/Container";
 import regi_image from "../assets/registration.png";
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
-import { Link } from "react-router";
-
+import { Link, useNavigate } from "react-router";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 const Registration = () => {
+  const auth = getAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
@@ -75,21 +81,35 @@ const Registration = () => {
       }
     }
 
-    if(email && fullname && password){
-      console.log("Registration Successful");
-      setEmailvalid(false)
-      setNamevalid(false)
-      setPasswordvalid(false)
-      setEmail("")
-      setFullname("")
-      setPassword("")
-      
+    if (
+      email &&
+      fullname &&
+      password &&
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+    ) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          toast.success("Registration Successful. Please verify your email");
+          sendEmailVerification(auth.currentUser);
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
+          setEmailvalid(false);
+          setNamevalid(false);
+          setPasswordvalid(false);
+          setEmail("");
+          setFullname("");
+          setPassword("");
+        })
+        .catch((error) => {
+          const err = error.message;
+          if (err.includes("auth/email-already-in-use")) {
+            setEmailerror("your email is already exits");
+          } else if (err.includes("auth/weak-password")) {
+            setPassworderror("Please password at lest 6 chatacter");
+          }
+        });
     }
-
-
-
-
-
   };
 
   return (
@@ -104,6 +124,20 @@ const Registration = () => {
           </p>
 
           <div className="w-[368px]">
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              // transition={Bounce}
+            />
+
             <div className="mb-[56px] relative">
               <TextField
                 label="Email Address"
@@ -276,7 +310,10 @@ const Registration = () => {
 
             <p className="mt-[35px] text-center text-[#03014C] font-secondary text-[13px]">
               Already have an account ?{" "}
-              <Link to="/login" className="text-[#EA6C00] font-secondary font-bold text-[13px]">
+              <Link
+                to="/login"
+                className="text-[#EA6C00] font-secondary font-bold text-[13px]"
+              >
                 Sign In
               </Link>
             </p>
