@@ -31,6 +31,7 @@
 
 
 
+
 import { HashRouter as Router, Routes, Route } from "react-router";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
