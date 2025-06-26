@@ -81,6 +81,7 @@ const Registration = () => {
         setPasswordvalid(false);
       } else {
         setPasswordvalid(true);
+      
       }
     }
 
@@ -89,15 +90,22 @@ const Registration = () => {
       fullname &&
       password &&
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+      &&
+      /(?=.*[a-z])/.test(password)
+      &&
+      /(?=.*[A-Z])/.test(password)
+      &&
+      /(?=.*[0-9])/.test(password)
+
     ) {
+       setLoader(true);
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           toast.success("Registration Successful. Please verify your email");
-          setLoader(true);
           sendEmailVerification(auth.currentUser);
           setTimeout(() => {
             navigate("/login");
-          }, 3000);
+          }, 2000);
           setEmailvalid(false);
           setNamevalid(false);
           setPasswordvalid(false);
@@ -109,8 +117,10 @@ const Registration = () => {
           const err = error.message;
           if (err.includes("auth/email-already-in-use")) {
             setEmailerror("your email is already exits");
+             setLoader(false);
           } else if (err.includes("auth/weak-password")) {
             setPassworderror("Please password at lest 6 chatacter");
+             setLoader(false);
           }
         });
     }

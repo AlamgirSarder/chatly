@@ -1,4 +1,3 @@
-
 import Container from "../components/layout/Container";
 import login_image from "../assets/login.jpg";
 import google_image from "../assets/google.png";
@@ -9,20 +8,20 @@ import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
 import { Link } from "react-router";
 
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
 const Login = () => {
+  const auth = getAuth();
+
   const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
 
   const [emailerror, setEmailerror] = useState("");
-  const [nameerror, setNameerror] = useState("");
   const [passworderror, setPassworderror] = useState("");
 
   const [show, setShow] = useState(false);
 
   const [emailvalid, setEmailvalid] = useState(false);
-  const [namevalid, setNamevalid] = useState(false);
   const [passwordvalid, setPasswordvalid] = useState(false);
 
   const handleEmail = (e) => {
@@ -41,6 +40,7 @@ const Login = () => {
   };
 
   const submitRegistration = () => {
+
     if (!email) {
       setEmailerror("Enter your email address");
       setEmailvalid(false);
@@ -51,12 +51,6 @@ const Login = () => {
       } else {
         setEmailvalid(true);
       }
-    }
-    if (!fullname) {
-      setNameerror("Give your name");
-      setNamevalid(false);
-    } else {
-      setNamevalid(true);
     }
 
     if (!password) {
@@ -77,18 +71,26 @@ const Login = () => {
       }
     }
 
-    if(email && fullname && password){
-      console.log("Registration Successful");
-      setEmail("")
-      setFullname("")
-      setPassword("")
-      
+    if (email && password) {
+      // console.log("Registration Successful");
+      // setEmail("")
+      // setFullname("")
+      // setPassword("")
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log("Login Successs");
+          console.log(userCredential.user);
+          
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+        if(errorCode.includes("auth/invalid-credential")){
+          toast.error("Invalid your email and password.")
+        }
+         
+        });
     }
-
-
-
-
-
   };
 
   return (
@@ -99,10 +101,30 @@ const Login = () => {
             Login to your account!
           </h2>
 
-          <button className="flex items-center font-secondary rounded-[8.34px] border-[#03014C]/30 py-[23px] border-2 pl-[29px] pr-[42px] text-[13px] font-semibold tracking-[2%] mb-[32px]"> <img className="mr-[10px] size-[19.26px]" src={google_image} alt="#google_image" />Login with Google</button>
-       
+          <button className="flex items-center font-secondary rounded-[8.34px] border-[#03014C]/30 py-[23px] border-2 pl-[29px] pr-[42px] text-[13px] font-semibold tracking-[2%] mb-[32px]">
+            {" "}
+            <img
+              className="mr-[10px] size-[19.26px]"
+              src={google_image}
+              alt="#google_image"
+            />
+            Login with Google
+          </button>
 
           <div className="w-[368px]">
+                 <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              // transition={Bounce}
+            />
             <div className="mb-[56px] relative">
               <TextField
                 label="Email Address"
@@ -116,9 +138,9 @@ const Login = () => {
                     borderRadius: "0px",
 
                     "& fieldset": {
-                        borderTop:"none",
-                        borderLeft:"none",
-                        borderRight:"none",
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
                       borderBottomColor: emailvalid ? "green" : "#11175D",
                       borderWidth: "2px",
                       opacity: emailvalid ? "1" : "0.3",
@@ -180,13 +202,13 @@ const Login = () => {
                 fullWidth
                 onChange={handlePassword}
                 sx={{
-                   "& .MuiOutlinedInput-root": {
+                  "& .MuiOutlinedInput-root": {
                     borderRadius: "0px",
 
                     "& fieldset": {
-                        borderTop:"none",
-                        borderLeft:"none",
-                        borderRight:"none",
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
                       borderBottomColor: emailvalid ? "green" : "#11175D",
                       borderWidth: "2px",
                       opacity: emailvalid ? "1" : "0.3",
@@ -232,10 +254,12 @@ const Login = () => {
             </button>
 
             <p className="mt-[35px] text-[#03014C] font-secondary text-[13px]">
-        
-              Don't have an account ? {" "}
-              <Link to="/registration" className="text-[#EA6C00] font-secondary font-bold text-[13px]">
-               Sign up
+              Don't have an account ?{" "}
+              <Link
+                to="/registration"
+                className="text-[#EA6C00] font-secondary font-bold text-[13px]"
+              >
+                Sign up
               </Link>
             </p>
           </div>
