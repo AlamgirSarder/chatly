@@ -29,11 +29,7 @@ const Login = () => {
     setEmailerror("");
   };
 
-  const handleFullName = (e) => {
-    setFullname(e.target.value);
-    setNameerror("");
-  };
-
+ 
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setPassworderror("");
@@ -209,9 +205,9 @@ const Login = () => {
                       borderTop: "none",
                       borderLeft: "none",
                       borderRight: "none",
-                      borderBottomColor: emailvalid ? "green" : "#11175D",
+                      borderBottomColor: passwordvalid ? "green" : "#11175D",
                       borderWidth: "2px",
-                      opacity: emailvalid ? "1" : "0.3",
+                      opacity: passwordvalid ? "1" : "0.3",
                     },
                     "&:hover fieldset": {
                       borderBottomColor: "#11175D",
@@ -261,6 +257,10 @@ const Login = () => {
               >
                 Sign up
               </Link>
+            </p>
+
+            <p>
+              <Link to="/forgotpassword">Forgot Password ?</Link>
             </p>
           </div>
         </div>
