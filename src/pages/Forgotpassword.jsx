@@ -2,8 +2,10 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const Forgotpassword = () => {
+  const auth = getAuth();
   const [email, setEmail] = useState("");
   const [emailerror, setEmailerror] = useState("");
   const [loaderback, setLoaderback] = useState(false);
@@ -11,8 +13,6 @@ const Forgotpassword = () => {
 
   const [emailvalid, setEmailvalid] = useState(false);
   const navigate = useNavigate();
-
-
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -30,18 +30,33 @@ const Forgotpassword = () => {
         setEmailvalid(true);
       }
     }
+    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+         console.log("successful reset");
+         
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          console.log(errorCode);
+          
+        });
+    }
   };
 
   const backtologin = () => {
-    setLoaderback(true)
+    setLoaderback(true);
     setTimeout(() => {
-        navigate("/login"); 
+      navigate("/login");
     }, 100);
   };
   return (
     <div className="bg-primary h-screen flex justify-center items-center">
       <div className="bg-white w-[500px] h-[250px] rounded-[10px] py-5 px-5">
-       <h2 className="font-primary text-3xl text-center capitalize font-bold mb-5"> fortgot password</h2>
+        <h2 className="font-primary text-3xl text-center capitalize font-bold mb-5">
+          {" "}
+          fortgot password
+        </h2>
         <div className=" relative">
           <TextField
             label="Email Address"
@@ -92,62 +107,62 @@ const Forgotpassword = () => {
           </p>
         </div>
 
-       <div className="flex justify-evenly mt-10">
-         <div>
-          <button
-            onClick={backtologin}
-            className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] w-[200px]"
-          >
-            {" "}
-            {loaderback ? (
-              <div className="flex justify-center items-center">
-                <ColorRing
-                  visible={true}
-                  height="35"
-                  width="35"
-                  ariaLabel="color-ring-loading"
-                  colors={[
-                    "#e15b64",
-                    "#f47e60",
-                    "#f8b26a",
-                    "#abbd81",
-                    "#849b87",
-                  ]}
-                />
-              </div>
-            ) : (
-              "Back to Login"
-            )}
-          </button>
+        <div className="flex justify-evenly mt-10">
+          <div>
+            <button
+              onClick={backtologin}
+              className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] w-[200px]"
+            >
+              {" "}
+              {loaderback ? (
+                <div className="flex justify-center items-center">
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    colors={[
+                      "#e15b64",
+                      "#f47e60",
+                      "#f8b26a",
+                      "#abbd81",
+                      "#849b87",
+                    ]}
+                  />
+                </div>
+              ) : (
+                "Back to Login"
+              )}
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={resetbtn}
+              className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+            >
+              {" "}
+              {loader ? (
+                <div className="flex justify-center items-center">
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    colors={[
+                      "#e15b64",
+                      "#f47e60",
+                      "#f8b26a",
+                      "#abbd81",
+                      "#849b87",
+                    ]}
+                  />
+                </div>
+              ) : (
+                "Reset"
+              )}
+            </button>
+          </div>
         </div>
-        <div>
-          <button
-            onClick={resetbtn}
-            className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-          >
-            {" "}
-            {loader ? (
-              <div className="flex justify-center items-center">
-                <ColorRing
-                  visible={true}
-                  height="35"
-                  width="35"
-                  ariaLabel="color-ring-loading"
-                  colors={[
-                    "#e15b64",
-                    "#f47e60",
-                    "#f8b26a",
-                    "#abbd81",
-                    "#849b87",
-                  ]}
-                />
-              </div>
-            ) : (
-              "Reset"
-            )}
-          </button>
-        </div>
-       </div>
       </div>
     </div>
   );
