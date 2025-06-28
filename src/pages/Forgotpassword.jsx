@@ -3,6 +3,8 @@ import { useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
+import { RingLoader} from "react-spinners";
 
 const Forgotpassword = () => {
   const auth = getAuth();
@@ -12,6 +14,10 @@ const Forgotpassword = () => {
   const [loader, setLoader] = useState(false);
 
   const [emailvalid, setEmailvalid] = useState(false);
+
+const [dna, setDna] = useState(false)
+ 
+
   const navigate = useNavigate();
 
   const handleEmail = (e) => {
@@ -31,16 +37,28 @@ const Forgotpassword = () => {
       }
     }
     if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+   
+
+          
       sendPasswordResetEmail(auth, email)
+     
+
         .then(() => {
-         console.log("successful reset");
-         
+          toast.success("Successful reset. Please check your email");
+        
+            setDna(true)
+            setTimeout(() => {
+              setDna(false)
+            }, 2000);
+            setEmail("")
+
+            
         })
         .catch((error) => {
           const errorCode = error.code;
           console.log(errorCode);
-          
         });
+      
     }
   };
 
@@ -52,11 +70,36 @@ const Forgotpassword = () => {
   };
   return (
     <div className="bg-primary h-screen flex justify-center items-center">
-      <div className="bg-white w-[500px] h-[250px] rounded-[10px] py-5 px-5">
-        <h2 className="font-primary text-3xl text-center capitalize font-bold mb-5">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        // transition={Bounce}
+      />
+      <div className="bg-white w-[600px] h-[300px] rounded-[10px] py-5 px-5">
+       <div className="flex items-center justify-center py-5">
+         {
+          dna ? (<RingLoader
+        color={"#11175D"}
+        loading={true}
+        cssOverride={""}
+        size={60}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />):
+        (<h2 className="font-primary text-3xl text-center capitalize font-bold mb-5">
           {" "}
-          fortgot password
-        </h2>
+          forgot password
+        </h2>)
+        }
+       </div>
         <div className=" relative">
           <TextField
             label="Email Address"

@@ -6,13 +6,20 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoIosEye } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
+
 const Login = () => {
   const auth = getAuth();
-
+  const navigate = useNavigate()
+  const provider = new GoogleAuthProvider();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,7 +36,6 @@ const Login = () => {
     setEmailerror("");
   };
 
- 
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setPassworderror("");
@@ -67,7 +73,11 @@ const Login = () => {
       }
     }
 
-    if (email && password) {
+    if (email && password
+      && /(?=.*[a-z])/.test(password)
+      && /(?=.*[A-Z])/.test(password)
+      && /(?=.*[0-9])/.test(password)
+    ) {
       // console.log("Registration Successful");
       // setEmail("")
       // setFullname("")
@@ -75,18 +85,32 @@ const Login = () => {
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log("Login Successs");
+            setTimeout(() => {
+            navigate("/home");
+          }, 2000);
           console.log(userCredential.user);
-          
         })
         .catch((error) => {
           const errorCode = error.code;
-        if(errorCode.includes("auth/invalid-credential")){
-          toast.error("Invalid your email and password.")
-        }
-         
+          if (errorCode.includes("auth/invalid-credential")) {
+            toast.error("Invalid your email and password.");
+          }
         });
     }
+  };
+
+  // google sign in
+  const googlesignin = () => {
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+      
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        console.log(errorCode);
+      });
   };
 
   return (
@@ -97,7 +121,10 @@ const Login = () => {
             Login to your account!
           </h2>
 
-          <button className="flex items-center font-secondary rounded-[8.34px] border-[#03014C]/30 py-[23px] border-2 pl-[29px] pr-[42px] text-[13px] font-semibold tracking-[2%] mb-[32px]">
+          <button
+            onClick={googlesignin}
+            className="flex items-center font-secondary rounded-[8.34px] border-[#03014C]/30 py-[23px] border-2 pl-[29px] pr-[42px] text-[13px] font-semibold tracking-[2%] mb-[32px] cursor-pointer"
+          >
             {" "}
             <img
               className="mr-[10px] size-[19.26px]"
@@ -108,7 +135,7 @@ const Login = () => {
           </button>
 
           <div className="w-[368px]">
-                 <ToastContainer
+            <ToastContainer
               position="top-center"
               autoClose={3000}
               hideProgressBar={false}
@@ -259,7 +286,7 @@ const Login = () => {
               </Link>
             </p>
 
-            <p>
+            <p className="text-primary font-primary font-bold">
               <Link to="/forgotpassword">Forgot Password ?</Link>
             </p>
           </div>
