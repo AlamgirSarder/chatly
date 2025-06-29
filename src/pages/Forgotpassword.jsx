@@ -6,6 +6,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { RingLoader} from "react-spinners";
 
+
 const Forgotpassword = () => {
   const auth = getAuth();
   const [email, setEmail] = useState("");
@@ -66,10 +67,10 @@ const [dna, setDna] = useState(false)
     setLoaderback(true);
     setTimeout(() => {
       navigate("/login");
-    }, 100);
+    }, 200);
   };
   return (
-    <div className="bg-primary h-screen flex justify-center items-center">
+    <div className="bg-white h-screen flex justify-center items-center ">
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -83,11 +84,11 @@ const [dna, setDna] = useState(false)
         theme="dark"
         // transition={Bounce}
       />
-      <div className="bg-white w-[600px] h-[300px] rounded-[10px] py-5 px-5">
+      <div className="bg-white w-[600px] h-[300px] rounded-[10px] py-5 px-5 shadow">
        <div className="flex items-center justify-center py-5">
          {
           dna ? (<RingLoader
-        color={"#11175D"}
+        color={"#EA6C00"}
         loading={true}
         cssOverride={""}
         size={60}
@@ -154,7 +155,7 @@ const [dna, setDna] = useState(false)
           <div>
             <button
               onClick={backtologin}
-              className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] w-[200px]"
+              className="relative py-[10px] px-[15px] bg-[#EA6C00] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)] w-[200px]"
             >
               {" "}
               {loaderback ? (
@@ -181,7 +182,7 @@ const [dna, setDna] = useState(false)
           <div>
             <button
               onClick={resetbtn}
-              className="relative py-[10px] px-[15px] bg-[#1E1E1E] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+              className="relative py-[10px] px-[15px] bg-[#EA6C00] font-primary text-[21px] font-semibold text-[#FFFFFF] rounded-[10px] cursor-pointer shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
             >
               {" "}
               {loader ? (
