@@ -84,7 +84,7 @@ const [dna, setDna] = useState(false)
         theme="dark"
         // transition={Bounce}
       />
-      <div className="bg-white w-[600px] h-[300px] rounded-[10px] py-5 px-5 shadow">
+      <div className="bg-white w-[600px] h-[300px] rounded-[10px] py-5 px-5 shadow-xl/20">
        <div className="flex items-center justify-center py-5">
          {
           dna ? (<RingLoader
