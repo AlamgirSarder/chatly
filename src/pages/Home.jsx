@@ -13,6 +13,7 @@ const Home = () => {
                 <img src={home_image} alt="#home_image" />
             </div>
             <div>
+              home page design
               
             </div>
 
