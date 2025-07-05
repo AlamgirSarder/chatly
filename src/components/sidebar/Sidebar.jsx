@@ -12,14 +12,18 @@ const Sidebar = () => {
               <img src={home_image} alt="#home_image" />
             </div>
 
-            <div className="py-[20px] ">
-                <SlHome size={46}  />
+            <div className="">
+                <SlHome size={46} className="relative after:content-[''] after:w-full h-full after:absolute after:bg-white after:top-0 after:left-0 "  />
             </div>
 
 
 
 
           </div>
+
+
+
+
         </div>
       </Container>
     </div>
