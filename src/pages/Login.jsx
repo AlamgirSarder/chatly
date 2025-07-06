@@ -86,7 +86,7 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             setTimeout(() => {
-            navigate("/home");
+            navigate("/");
           }, 2000);
           console.log(userCredential.user);
         })
