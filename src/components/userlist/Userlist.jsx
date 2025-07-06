@@ -4,6 +4,7 @@ import friens_image1 from "../../assets/friends1.png";
 import friens_image2 from "../../assets/friends2.png";
 import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
+import friens_image5 from "../../assets/friends5.png";
 
 import { FaPlus } from "react-icons/fa";
 
@@ -30,9 +31,13 @@ const Userlist = () => {
       timing: "Today, 12:22pm",
     },
     {
+      img: friens_image5,
+      name: "Marvin McKinney",
+      timing: "Today, 8:56pm",
+    },
+       {
       img: friens_image1,
       name: "Raghav",
-      message: "Dinner?",
       timing: "Today, 8:56pm",
     },
   ];
@@ -47,9 +52,9 @@ const Userlist = () => {
           <BsThreeDotsVertical />
         </Flex>
 
-        <div className=" overflow-y-auto h-[296px] pt-[10px]">
+        <div className=" overflow-y-auto h-[354px] pt-[10px]">
           {friends_details.map((items, i) => (
-            <div key={i} className="mb-[26px]">
+            <div key={i} className="mb-[20px]">
               <Flex className="h-[54px] justify-between border-b pb-[10px] border-black/25">
                 <Flex className="items-center">
                   <div
