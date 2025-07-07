@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import BlockUser from "../components/block-user/BlockUser";
 import Friends from "../components/friends-list/Friends";
 import FriendRequest from "../components/friends-request/FriendRequest";
@@ -7,14 +8,45 @@ import Flex from "../components/layout/Flex";
 import MyGroup from "../components/my-group/MyGroup";
 import Sidebar from "../components/sidebar/Sidebar"
 import Userlist from "../components/userlist/Userlist";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 
 
 const Home = () => {
+  
+const auth = getAuth();
+
+  const navigate = useNavigate()
+  const data = useSelector(state=>state.userInfo.value)
+  console.log(data);
+  
+  const [verify,setVerify] = useState(false)
+  const [loading,setLoading] = useState(true)
+
+  useEffect(()=>{
+    if(!data){
+      navigate("/login")
+    }
+  },[])
+
+onAuthStateChanged(auth, (user) => {
+  if (user.emailVerified) {
+    setVerify(true);
+  } 
+  setLoading(false)
+});
+
+if(loading){
+  return null
+}
+
   return (
     <Container>
-      <div className="p-[30px]">
+      {
+        verify ?  <div className="p-[30px]">
         <Flex>
           <div className="mr-[43px]">
            <Sidebar />
@@ -33,7 +65,10 @@ const Home = () => {
           </Flex>
           </div>
         </Flex>
-      </div>
+      </div> : 
+      <p>Please verify your email</p>
+      }
+     
     </Container>
   );
 };

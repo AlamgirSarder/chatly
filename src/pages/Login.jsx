@@ -15,10 +15,14 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { userLoginInfo } from "../slice/userSlice";
 
 const Login = () => {
   const auth = getAuth();
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const provider = new GoogleAuthProvider();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,7 +88,12 @@ const Login = () => {
       // setPassword("")
 
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then((user) => {
+          console.log(user);
+
+          dispatch(userLoginInfo(user))
+          localStorage.setItem("userLoginInfo",JSON.stringify(user))
+          
             setTimeout(() => {
             navigate("/");
           }, 2000);
