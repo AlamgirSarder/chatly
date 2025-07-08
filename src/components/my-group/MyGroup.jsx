@@ -12,35 +12,35 @@ const MyGroup = () => {
       name: "Raghav",
       message: "Dinner?",
       timing: "Today, 8:56pm",
-      active: false
+ 
     },
     {
       img: friens_image2,
       name: "Swathi",
       message: "Sure!",
       timing: "Today, 2:31pm",
-      active: true
+  
     },
     {
       img: friens_image3,
       name: "Kiran",
       message: "Hi.....",
       timing: "Yesterday, 6:22pm",
-      active: false
+    
     },
     {
       img: friens_image4,
       name: "Tejeshwini C",
       message: "I will call him today.",
       timing: "Today, 12:22pm",
-      active: false
+    
     },
     {
       img: friens_image1,
       name: "Raghav",
       message: "Dinner?",
       timing: "Today, 8:56pm",
-      active: false
+      
     },
   ];
 
@@ -63,11 +63,7 @@ const MyGroup = () => {
                     className="relative w-[52px] h-[52px] rounded-full bg-cover bg-center mr-[10px]"
                     style={{ backgroundImage: `url(${items.img})` }}
                   >
-                   {
-                    items.active && (
-                         <span className="w-4 h-4 border-2 border-white rounded-full bg-green-400 absolute bottom-0 right-0 "></span>
-                    )
-                   }
+                 
                   </div>
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
