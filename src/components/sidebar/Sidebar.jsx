@@ -27,6 +27,7 @@ const Sidebar = () => {
       });
   };
 
+
   return (
     <div>
       <div className="w-[186px] h-[954px] bg-bggcolor rounded-[20px] pt-[38px]">
