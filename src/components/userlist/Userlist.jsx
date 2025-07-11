@@ -9,6 +9,7 @@ import friens_image5 from "../../assets/friends5.png";
 import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { useSelector } from "react-redux";
 
 const Userlist = () => {
   // const friends_details = [
@@ -44,6 +45,8 @@ const Userlist = () => {
   //   },
   // ];
 
+  const data = useSelector((state) => state.userInfo.value.user);
+
   const db = getDatabase();
 
   const [userdetails, setUserdetails] = useState([]);
@@ -54,7 +57,9 @@ const Userlist = () => {
     onValue(usersRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val());
+        if (data.uid !== item.key) {
+          arr.push(item.val());
+        }
       });
 
       setUserdetails(arr);
@@ -110,15 +115,11 @@ const Userlist = () => {
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
                       {/* {items.name} */}
-                      {
-                        items.username
-                      }
+                      {items.username}
                     </h2>
                     <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
                       {/* {items.timing} */}
-                      {
-                        items.email
-                      }
+                      {items.email}
                     </p>
                   </div>
                 </Flex>
@@ -130,8 +131,6 @@ const Userlist = () => {
                 </div>
               </Flex>
             </div>
-
-          
           ))}
         </div>
       </div>

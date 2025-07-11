@@ -112,7 +112,10 @@ const Login = () => {
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
-      
+                    
+            setTimeout(() => {
+            navigate("/");
+          }, 2000);
       })
       .catch((error) => {
         const errorCode = error.code;

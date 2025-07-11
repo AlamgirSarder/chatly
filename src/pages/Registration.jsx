@@ -9,6 +9,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 
@@ -100,6 +101,14 @@ const Registration = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
           toast.success("Registration Successful. Please verify your email");
+
+          updateProfile(auth.currentUser, {
+            displayName: fullname
+          })
+
+          console.log(user);
+          
+
           sendEmailVerification(auth.currentUser);
 
           set(ref(db, "users/" + user.user.uid), {
@@ -110,7 +119,7 @@ const Registration = () => {
           setTimeout(() => {
             navigate("/login");
           }, 2000);
-          
+
           setEmailvalid(false);
           setNamevalid(false);
           setPasswordvalid(false);
