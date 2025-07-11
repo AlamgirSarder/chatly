@@ -10,11 +10,14 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+
 import { ToastContainer, toast } from "react-toastify";
 import { ColorRing } from "react-loader-spinner";
 
 const Registration = () => {
   const auth = getAuth();
+  const db = getDatabase();
   const navigate = useNavigate();
 
   const [loader, setLoader] = useState(false);
@@ -81,7 +84,6 @@ const Registration = () => {
         setPasswordvalid(false);
       } else {
         setPasswordvalid(true);
-      
       }
     }
 
@@ -89,23 +91,26 @@ const Registration = () => {
       email &&
       fullname &&
       password &&
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-      &&
-      /(?=.*[a-z])/.test(password)
-      &&
-      /(?=.*[A-Z])/.test(password)
-      &&
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) &&
+      /(?=.*[a-z])/.test(password) &&
+      /(?=.*[A-Z])/.test(password) &&
       /(?=.*[0-9])/.test(password)
-
     ) {
-       setLoader(true);
+      setLoader(true);
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then((user) => {
           toast.success("Registration Successful. Please verify your email");
           sendEmailVerification(auth.currentUser);
+
+          set(ref(db, "users/" + user.user.uid), {
+            username: fullname,
+            email: email,
+          });
+
           setTimeout(() => {
             navigate("/login");
           }, 2000);
+          
           setEmailvalid(false);
           setNamevalid(false);
           setPasswordvalid(false);
@@ -113,14 +118,15 @@ const Registration = () => {
           setFullname("");
           setPassword("");
         })
+
         .catch((error) => {
           const err = error.message;
           if (err.includes("auth/email-already-in-use")) {
             setEmailerror("your email is already exits");
-             setLoader(false);
+            setLoader(false);
           } else if (err.includes("auth/weak-password")) {
             setPassworderror("Please password at lest 6 chatacter");
-             setLoader(false);
+            setLoader(false);
           }
         });
     }

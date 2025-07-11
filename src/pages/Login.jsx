@@ -89,15 +89,14 @@ const Login = () => {
 
       signInWithEmailAndPassword(auth, email, password)
         .then((user) => {
-          console.log(user);
-
+       
           dispatch(userLoginInfo(user))
           localStorage.setItem("userLoginInfo",JSON.stringify(user))
           
             setTimeout(() => {
             navigate("/");
           }, 2000);
-          console.log(userCredential.user);
+        
         })
         .catch((error) => {
           const errorCode = error.code;
