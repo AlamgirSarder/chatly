@@ -6,36 +6,62 @@ import frequest_image2 from "../../assets/friends2.png";
 import frequest_image3 from "../../assets/friends3.png";
 import frequest_image4 from "../../assets/friends4.png";
 
-import { FiSearch } from "react-icons/fi";
-const FriendRequest = () => {
-  const friends_details = [
-    {
-      img: frequest_image1,
-      name: "Raghav",
-      message: "Dinner?",
-    },
-    {
-      img: frequest_image2,
-      name: "Swathi",
-      message: "Sure!",
-    },
 
-    {
-      img: frequest_image3,
-      name: "Kiran",
-      message: "Hi.....",
-    },
-    {
-      img: frequest_image4,
-      name: "Tejeshwini C",
-      message: "I will call him today.",
-    },
-    {
-      img: frequest_image1,
-      name: "Raghav",
-      message: "Dinner?",
-    },
-  ];
+
+import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+
+const FriendRequest = () => {
+  // const friends_details = [
+  //   {
+  //     img: frequest_image1,
+  //     name: "Raghav",
+  //     message: "Dinner?",
+  //   },
+  //   {
+  //     img: frequest_image2,
+  //     name: "Swathi",
+  //     message: "Sure!",
+  //   },
+
+  //   {
+  //     img: frequest_image3,
+  //     name: "Kiran",
+  //     message: "Hi.....",
+  //   },
+  //   {
+  //     img: frequest_image4,
+  //     name: "Tejeshwini C",
+  //     message: "I will call him today.",
+  //   },
+  //   {
+  //     img: frequest_image1,
+  //     name: "Raghav",
+  //     message: "Dinner?",
+  //   },
+  // ];
+const [friendRequest,setFriendRequest] = useState([])
+
+const data = useSelector((state) => state.userInfo.value.user);
+const db = getDatabase();
+console.log(friendRequest);
+
+
+useEffect(()=>{
+
+const freindRquestData = ref(db, 'friendRequest/');
+
+onValue(freindRquestData, (snapshot) => {
+
+console.log(snapshot.val());
+
+
+});
+
+
+},[])
 
   return (
     <div>
@@ -49,7 +75,7 @@ const FriendRequest = () => {
           </Flex>
 
           <div className=" overflow-y-auto h-[382px] pl-[20px] pt-[10px]">
-            {friends_details.map((items, i) => (
+            {friendRequest.map((items, i) => (
               <div
                 key={i}
                 className="relative mb-[28px] h-[70px] after:absolute after:content-[''] after:w-[365px] after:h-[1px] after:bg-[#000000]/25 after:bottom-0 after:left-[10px] "
@@ -58,14 +84,16 @@ const FriendRequest = () => {
                   <Flex className="items-center">
                     <div
                       className="relative w-[70px] h-[70px] rounded-full bg-cover bg-center mr-[10px]"
-                      style={{ backgroundImage: `url(${items.img})` }}
+                      style={{ backgroundImage: `url(${frequest_image1})` }}
                     ></div>
                     <div>
                       <h2 className="font-poppins font-semibold text-black text-[18px]">
-                        {items.name}
+                        {/* {items.name} */}
+                        {items.sendername}
                       </h2>
                       <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[14px]">
-                        {items.message}
+                        {/* {items.message} */}
+                       {items.email}
                       </p>
                     </div>
                   </Flex>

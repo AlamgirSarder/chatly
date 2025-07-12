@@ -104,16 +104,14 @@ const Registration = () => {
 
           updateProfile(auth.currentUser, {
             displayName: fullname
-          })
+          }).then(()=>{
 
-          console.log(user);
-          
 
           sendEmailVerification(auth.currentUser);
 
           set(ref(db, "users/" + user.user.uid), {
-            username: fullname,
-            email: email,
+            username: user.user.displayName,
+            email: user.user.email,
           });
 
           setTimeout(() => {
@@ -127,6 +125,10 @@ const Registration = () => {
           setFullname("");
           setPassword("");
         })
+          })
+
+          
+
 
         .catch((error) => {
           const err = error.message;

@@ -66,19 +66,23 @@ const Userlist = () => {
     });
   }, []);
 
-  const [disabled, setDisabled] = useState(false);
+  //Data send database
+  const [disabled, setDisabled] = useState([]);
+
+  const [btn, setBtn] = useState([]);
 
   const request = (item) => {
-    console.log("Data transfer");
+    setBtn((ppp) => [...ppp, item.userid]);
+    console.log(item, "Data transfer");
 
-    set(ref(db, "friendRequest/"), {
-      senderid: data.displayName,
-      sendername: data.uid,
+    set(ref(db, "friendRequest/" + item.userid), {
+      senderid: data.uid,
+      sendername: data.displayName,
       receverid: item.userid,
       recevername: item.username,
     });
 
-    setDisabled(true);
+    setDisabled((prev) => [...prev, item.userid]);
   };
 
   return (
@@ -115,13 +119,18 @@ const Userlist = () => {
                 <div className="mr-[10px]">
                   <button
                     onClick={() => request(items)}
-                    disabled={disabled}
+                    disabled={disabled.includes(items.userid)}
                     className={`flex size-[30px] bg-black rounded-[5px] justify-center items-center ${
-                      disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+                      disabled.includes(items.userid)
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
                     }`}
                   >
-                    <FaPlus className="text-white" />
-                    
+                    {btn.includes(items.userid) ? (
+                      <FaMinus className="text-white" />
+                    ) : (
+                      <FaPlus className="text-white" />
+                    )}
                   </button>
                 </div>
               </Flex>

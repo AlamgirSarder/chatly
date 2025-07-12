@@ -29,6 +29,12 @@ const Sidebar = () => {
 
 
 const data = useSelector(state => state.userInfo.value);
+console.log(data);
+
+
+if(!data){
+  return null
+}
 
 
 
