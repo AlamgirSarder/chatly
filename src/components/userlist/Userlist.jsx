@@ -6,9 +6,9 @@ import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
 import friens_image5 from "../../assets/friends5.png";
 
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const Userlist = () => {
@@ -58,13 +58,28 @@ const Userlist = () => {
       const arr = [];
       snapshot.forEach((item) => {
         if (data.uid !== item.key) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), userid: item.key });
         }
       });
 
       setUserdetails(arr);
     });
   }, []);
+
+  const [disabled, setDisabled] = useState(false);
+
+  const request = (item) => {
+    console.log("Data transfer");
+
+    set(ref(db, "friendRequest/"), {
+      senderid: data.displayName,
+      sendername: data.uid,
+      receverid: item.userid,
+      recevername: item.username,
+    });
+
+    setDisabled(true);
+  };
 
   return (
     <div>
@@ -77,33 +92,6 @@ const Userlist = () => {
         </Flex>
 
         <div className=" overflow-y-auto h-[354px] pt-[10px]">
-          {/* {friends_details.map((items, i) => (
-            <div key={i} className="mb-[20px]">
-              <Flex className="h-[54px] justify-between border-b pb-[10px] border-black/25">
-                <Flex className="items-center">
-                  <div
-                    className="relative w-[52px] h-[52px] rounded-full bg-cover bg-center mr-[10px]"
-                    style={{ backgroundImage: `url(${items.img})` }}
-                  ></div>
-                  <div>
-                    <h2 className="font-poppins font-semibold text-black text-[14px]">
-                      {items.name}
-                    </h2>
-                    <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
-                      {items.timing}
-                    </p>
-                  </div>
-                </Flex>
-
-                <div className="mr-[10px]">
-                  <Flex className="size-[30px] bg-black rounded-[5px] justify-center items-center">
-                    <FaPlus className="text-white" />
-                  </Flex>
-                </div>
-              </Flex>
-            </div>
-          ))} */}
-
           {userdetails.map((items, i) => (
             <div key={i} className="mb-[20px]">
               <Flex className="h-[54px] justify-between border-b pb-[10px] border-black/25">
@@ -125,9 +113,16 @@ const Userlist = () => {
                 </Flex>
 
                 <div className="mr-[10px]">
-                  <Flex className="size-[30px] bg-black rounded-[5px] justify-center items-center">
+                  <button
+                    onClick={() => request(items)}
+                    disabled={disabled}
+                    className={`flex size-[30px] bg-black rounded-[5px] justify-center items-center ${
+                      disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+                    }`}
+                  >
                     <FaPlus className="text-white" />
-                  </Flex>
+                    
+                  </button>
                 </div>
               </Flex>
             </div>

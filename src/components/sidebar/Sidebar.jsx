@@ -21,16 +21,14 @@ const Sidebar = () => {
         localStorage.removeItem("userLoginInfo");
         setTimeout(() => {
           navigate("/login");
-        }, 1000);
+        },1000);
       }).catch((error) => {
-        // An error happened.
+     
       });
   };
 
 
-const data = useSelector(state=>state.userInfo.value.user)
-
-
+const data = useSelector(state => state.userInfo.value);
 
 
 
@@ -39,7 +37,7 @@ const data = useSelector(state=>state.userInfo.value.user)
       <div className="w-[186px] h-[954px] bg-bggcolor rounded-[20px] pt-[38px]">
         <div className="size-[100px] bg-gray-500 rounded-full mx-auto mb-[78px]">
           <img src={home_image} alt="#home_image" />
-            <p className="font-primary text-white font-bold text-center text-2xl mt-[10px]">{data.displayName}</p>
+            <p className="font-primary text-white font-bold text-center text-2xl mt-[10px]">{data.user.displayName}</p>
         </div>
       
 
