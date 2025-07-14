@@ -8,7 +8,7 @@ import friens_image5 from "../../assets/friends5.png";
 
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const Userlist = () => {
@@ -67,22 +67,21 @@ const Userlist = () => {
   }, []);
 
   //Data send database
-  const [disabled, setDisabled] = useState([]);
-
-  const [btn, setBtn] = useState([]);
 
   const request = (item) => {
-    setBtn((ppp) => [...ppp, item.userid]);
+
     console.log(item, "Data transfer");
 
-    set(ref(db, "friendRequest/" + item.userid), {
+    set(push(ref(db, "friendRequest/")), {
       senderid: data.uid,
       sendername: data.displayName,
+      senderemail: data.email,
       receverid: item.userid,
       recevername: item.username,
+      receveremail: item.email,
     });
 
-    setDisabled((prev) => [...prev, item.userid]);
+
   };
 
   return (
@@ -119,18 +118,9 @@ const Userlist = () => {
                 <div className="mr-[10px]">
                   <button
                     onClick={() => request(items)}
-                    disabled={disabled.includes(items.userid)}
-                    className={`flex size-[30px] bg-black rounded-[5px] justify-center items-center ${
-                      disabled.includes(items.userid)
-                        ? "opacity-50 cursor-not-allowed"
-                        : "cursor-pointer"
-                    }`}
+                    className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
                   >
-                    {btn.includes(items.userid) ? (
-                      <FaMinus className="text-white" />
-                    ) : (
-                      <FaPlus className="text-white" />
-                    )}
+                    <FaPlus className="text-white" />
                   </button>
                 </div>
               </Flex>

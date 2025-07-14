@@ -6,12 +6,9 @@ import frequest_image2 from "../../assets/friends2.png";
 import frequest_image3 from "../../assets/friends3.png";
 import frequest_image4 from "../../assets/friends4.png";
 
-
-
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 
 const FriendRequest = () => {
   // const friends_details = [
@@ -42,26 +39,26 @@ const FriendRequest = () => {
   //     message: "Dinner?",
   //   },
   // ];
-const [friendRequest,setFriendRequest] = useState([])
+  const [friendRequest, setFriendRequest] = useState([]);
 
-const data = useSelector((state) => state.userInfo.value.user);
-const db = getDatabase();
-console.log(friendRequest);
+  const data = useSelector((state) => state.userInfo.value.user);
+  const db = getDatabase();
 
+  useEffect(() => {
+    const freindRquestData = ref(db, "friendRequest");
 
-useEffect(()=>{
+    onValue(freindRquestData, (snapshot) => {
+      const arrr = [];
+      snapshot.forEach((item) => {
+        if (data.uid == item.val().receverid) {
+          arrr.push(item.val());
+        }
+      });
+      setFriendRequest(arrr);
+    });
 
-const freindRquestData = ref(db, 'friendRequest/');
-
-onValue(freindRquestData, (snapshot) => {
-
-console.log(snapshot.val());
-
-
-});
-
-
-},[])
+    console.log(friendRequest);
+  }, []);
 
   return (
     <div>
@@ -93,7 +90,7 @@ console.log(snapshot.val());
                       </h2>
                       <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[14px]">
                         {/* {items.message} */}
-                       {items.email}
+                        {items.senderemail}
                       </p>
                     </div>
                   </Flex>

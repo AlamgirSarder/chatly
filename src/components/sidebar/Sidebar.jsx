@@ -14,38 +14,34 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const data = useSelector((state) => state.userInfo.value);
+  console.log(data);
+
   const logout = () => {
     signOut(auth)
       .then(() => {
-        dispatch(userLoginInfo(null));
-        localStorage.removeItem("userLoginInfo");
         setTimeout(() => {
+          dispatch(userLoginInfo(null));
+          localStorage.removeItem("userLoginInfo");
           navigate("/login");
-        },1000);
-      }).catch((error) => {
-     
-      });
+        }, 1000);
+      })
+      .catch((error) => {});
   };
 
-
-const data = useSelector(state => state.userInfo.value);
-console.log(data);
-
-
-if(!data){
-  return null
-}
-
-
+  if (!data) {
+    return null;
+  }
 
   return (
     <div>
       <div className="w-[186px] h-[954px] bg-bggcolor rounded-[20px] pt-[38px]">
         <div className="size-[100px] bg-gray-500 rounded-full mx-auto mb-[78px]">
           <img src={home_image} alt="#home_image" />
-            <p className="font-primary text-white font-bold text-center text-2xl mt-[10px]">{data.user.displayName}</p>
+          <p className="font-primary text-white font-bold text-center text-2xl mt-[10px]">
+            {data.user.displayName}
+          </p>
         </div>
-      
 
         <div className="relative group hover:after:absolute hover:after:content-[''] hover:after:top-0 hover:after:right-0 hover:after:w-[85%] hover:after:h-full hover:after:bg-white hover:after:z-[-1] z-[1] py-[20px] hover:after:rounded-l-[20px] hover:before:absolute hover:before:content-[''] hover:before:top-0 hover:before:right-0 hover:before:w-[8px] hover:before:h-full hover:before:bg-[#1E1E1E] hover:before:rounded-l-[25px] hover:before:shadow-[-2px_0_4px_rgba(0,0,0,0.25)] mb-[35px] cursor-pointer transition-all duration-75">
           <SlHome
