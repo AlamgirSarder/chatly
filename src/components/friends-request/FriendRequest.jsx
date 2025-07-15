@@ -57,7 +57,6 @@ const FriendRequest = () => {
       setFriendRequest(arrr);
     });
 
-    console.log(friendRequest);
   }, []);
 
   return (
@@ -84,6 +83,7 @@ const FriendRequest = () => {
                       style={{ backgroundImage: `url(${frequest_image1})` }}
                     ></div>
                     <div>
+
                       <h2 className="font-poppins font-semibold text-black text-[18px]">
                         {/* {items.name} */}
                         {items.sendername}
