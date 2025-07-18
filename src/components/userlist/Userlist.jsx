@@ -12,38 +12,6 @@ import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const Userlist = () => {
-  // const friends_details = [
-  //   {
-  //     img: friens_image1,
-  //     name: "Raghav",
-  //     timing: "Today, 8:56pm",
-  //   },
-  //   {
-  //     img: friens_image2,
-  //     name: "Swathi",
-  //     timing: "Today, 2:31pm",
-  //   },
-  //   {
-  //     img: friens_image3,
-  //     name: "Kiran",
-  //     timing: "Yesterday, 6:22pm",
-  //   },
-  //   {
-  //     img: friens_image4,
-  //     name: "Tejeshwini C",
-  //     timing: "Today, 12:22pm",
-  //   },
-  //   {
-  //     img: friens_image5,
-  //     name: "Marvin McKinney",
-  //     timing: "Today, 8:56pm",
-  //   },
-  //   {
-  //     img: friens_image1,
-  //     name: "Raghav",
-  //     timing: "Today, 8:56pm",
-  //   },
-  // ];
 
   const data = useSelector((state) => state.userInfo.value.user);
 
@@ -84,6 +52,9 @@ const Userlist = () => {
 
   };
 
+
+const [xx,setXx] = useState(false)
+
   return (
     <div>
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
@@ -116,12 +87,28 @@ const Userlist = () => {
                 </Flex>
 
                 <div className="mr-[10px]">
-                  <button
+                 
+                  {
+                   xx ?
+                          <button
+                    className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
+                  >
+                    <FaMinus className="text-white" />
+                  </button>
+
+                  :
+                   <button
                     onClick={() => request(items)}
                     className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
                   >
                     <FaPlus className="text-white" />
                   </button>
+                    
+
+                     
+                  }
+
+
                 </div>
               </Flex>
             </div>

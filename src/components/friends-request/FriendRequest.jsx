@@ -87,7 +87,6 @@ const FriendRequest = () => {
                         {items.sendername}
                       </h2>
                       <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[14px]">
-                        
                         {items.senderemail}
                       </p>
                     </div>
