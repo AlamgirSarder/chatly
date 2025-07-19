@@ -10,15 +10,15 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useSelector } from "react-redux";
+import FriendRequest from "../friends-request/FriendRequest";
 
 const Userlist = () => {
-
   const data = useSelector((state) => state.userInfo.value.user);
 
   const db = getDatabase();
 
   const [userdetails, setUserdetails] = useState([]);
-
+  const [friendRequest, setFriendRequest] = useState([]);
   useEffect(() => {
     const usersRef = ref(db, "users/");
 
@@ -36,8 +36,22 @@ const Userlist = () => {
 
   //Data send database
 
-  const request = (item) => {
+  useEffect(() => {
+    const freindRquestData = ref(db, "friendRequest");
 
+    onValue(freindRquestData, (snapshot) => {
+      const arrr = [];
+      snapshot.forEach((item) => {
+        arrr.push(item.val().receverid + item.val().senderid);
+      });
+
+      setFriendRequest(arrr);
+    });
+  }, []);
+
+  console.log(friendRequest);
+
+  const request = (item) => {
     console.log(item, "Data transfer");
 
     set(push(ref(db, "friendRequest/")), {
@@ -48,12 +62,9 @@ const Userlist = () => {
       recevername: item.username,
       receveremail: item.email,
     });
-
-
   };
 
-
-const [xx,setXx] = useState(false)
+  const [xx, setXx] = useState(false);
 
   return (
     <div>
@@ -87,28 +98,19 @@ const [xx,setXx] = useState(false)
                 </Flex>
 
                 <div className="mr-[10px]">
-                 
-                  {
-                   xx ?
-                          <button
-                    className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
-                  >
-                    <FaMinus className="text-white" />
-                  </button>
-
-                  :
-                   <button
-                    onClick={() => request(items)}
-                    className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
-                  >
-                    <FaPlus className="text-white" />
-                  </button>
-                    
-
-                     
-                  }
-
-
+                  {friendRequest.includes(data.uid + items.userid) ||
+                  friendRequest.includes(items.userid + data.uid) ? (
+                    <button className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer">
+                      <FaMinus className="text-white" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => request(items)}
+                      className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer"
+                    >
+                      <FaPlus className="text-white" />
+                    </button>
+                  )}
                 </div>
               </Flex>
             </div>

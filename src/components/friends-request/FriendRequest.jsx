@@ -54,9 +54,12 @@ const FriendRequest = () => {
           arrr.push(item.val());
         }
       });
+
       setFriendRequest(arrr);
     });
   }, []);
+
+  console.log(friendRequest);
 
   return (
     <div>
@@ -83,7 +86,6 @@ const FriendRequest = () => {
                     ></div>
                     <div>
                       <h2 className="font-poppins font-semibold text-black text-[18px]">
-                      
                         {items.sendername}
                       </h2>
                       <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[14px]">
@@ -108,6 +110,5 @@ const FriendRequest = () => {
     </div>
   );
 };
-
 
 export default FriendRequest;
