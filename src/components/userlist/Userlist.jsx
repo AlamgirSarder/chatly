@@ -64,7 +64,7 @@ const Userlist = () => {
     });
   };
 
-  const [xx, setXx] = useState(false);
+
 
   return (
     <div>
