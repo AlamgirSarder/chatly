@@ -5,6 +5,7 @@ import group_image2 from "../../assets/group2.png";
 import group_image3 from "../../assets/group3.png";
 
 import { FiSearch } from "react-icons/fi";
+import { useEffect } from "react";
 const Groups = () => {
   const friends_details = [
     {
@@ -29,6 +30,13 @@ const Groups = () => {
       message: "Hi Guys, Wassup!?",
     },
   ];
+
+  useEffect(()=>{
+
+  },[])
+
+
+
 
   return (
     <div>
