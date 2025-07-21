@@ -32,7 +32,8 @@ const Groups = () => {
   ];
 
   useEffect(()=>{
-
+      console.log("this group section");
+      
   },[])
 
 
