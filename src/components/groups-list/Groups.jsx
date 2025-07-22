@@ -32,11 +32,14 @@ const Groups = () => {
   ];
 
   useEffect(()=>{
-      console.log("this group section");
+      console.log("this group section count");
       
   },[])
 
 
+
+
+  
 
 
   return (
