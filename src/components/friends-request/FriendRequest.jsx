@@ -6,39 +6,12 @@ import frequest_image2 from "../../assets/friends2.png";
 import frequest_image3 from "../../assets/friends3.png";
 import frequest_image4 from "../../assets/friends4.png";
 
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, remove, set, push } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const FriendRequest = () => {
-  // const friends_details = [
-  //   {
-  //     img: frequest_image1,
-  //     name: "Raghav",
-  //     message: "Dinner?",
-  //   },
-  //   {
-  //     img: frequest_image2,
-  //     name: "Swathi",
-  //     message: "Sure!",
-  //   },
-
-  //   {
-  //     img: frequest_image3,
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //   },
-  //   {
-  //     img: frequest_image4,
-  //     name: "Tejeshwini C",
-  //     message: "I will call him today.",
-  //   },
-  //   {
-  //     img: frequest_image1,
-  //     name: "Raghav",
-  //     message: "Dinner?",
-  //   },
-  // ];
+ 
   const [friendRequest, setFriendRequest] = useState([]);
 
   const data = useSelector((state) => state.userInfo.value.user);
@@ -51,7 +24,7 @@ const FriendRequest = () => {
       const arrr = [];
       snapshot.forEach((item) => {
         if (data.uid == item.val().receverid) {
-          arrr.push(item.val());
+          arrr.push({...item.val(),userid:item.key});
         }
       });
 
@@ -59,7 +32,20 @@ const FriendRequest = () => {
     });
   }, []);
 
-  console.log(friendRequest);
+
+const accepthandle = (item) =>{
+
+   set(push(ref(db, "friend/")), {
+          ...item
+      }).then(()=>{
+        remove(ref(db,"friendRequest/"+ item.userid))
+      })
+
+  
+  
+}
+
+
 
   return (
     <div>
@@ -95,7 +81,7 @@ const FriendRequest = () => {
                   </Flex>
 
                   <div>
-                    <div className="w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center">
+                    <div onClick={()=>accepthandle(items)} className="w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center">
                       <h2 className="font-poppins text-[20px] text-white font-semibold">
                         Accept
                       </h2>
