@@ -27,44 +27,6 @@ const Friends = () => {
   console.log(friendData);
 
   
-  // const friends_details = [
-  //   {
-  //     img: friens_image1,
-  //     name: "Raghav",
-  //     message: "Dinner?",
-  //     timing: "Today, 8:56pm",
-  //     active: false
-  //   },
-  //   {
-  //     img: friens_image2,
-  //     name: "Swathi",
-  //     message: "Sure!",
-  //     timing: "Today, 2:31pm",
-  //     active: true
-  //   },
-  //   {
-  //     img: friens_image3,
-  //     name: "Kiran",
-  //     message: "Hi.....",
-  //     timing: "Yesterday, 6:22pm",
-  //     active: false
-  //   },
-  //   {
-  //     img: friens_image4,
-  //     name: "Tejeshwini C",
-  //     message: "I will call him today.",
-  //     timing: "Today, 12:22pm",
-  //     active: false
-  //   },
-  //   {
-  //     img: friens_image1,
-  //     name: "Raghav",
-  //     message: "Dinner?",
-  //     timing: "Today, 8:56pm",
-  //     active: false
-  //   },
-  // ];
-
   return (
     <div>
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
