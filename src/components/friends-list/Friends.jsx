@@ -8,12 +8,14 @@ import { useEffect, useState } from "react";
 import { getDatabase, onValue, ref } from "firebase/database";
 import { useSelector } from "react-redux";
 
+
 const Friends = () => {
   const db = getDatabase();
   const data = useSelector((state) => state.userInfo.value.user);
   const [friendData, setFriendData] = useState([]);
+
   useEffect(() => {
-    const friendRef = ref(db, "friend");
+    const friendRef = ref(db,"friend");
     onValue(friendRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
@@ -24,9 +26,8 @@ const Friends = () => {
       setFriendData(arr);
     });
   }, []);
-  console.log(friendData);
+ 
 
-  
   return (
     <div>
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
