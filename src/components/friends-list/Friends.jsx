@@ -26,7 +26,7 @@ const Friends = () => {
       setFriendData(arr);
     });
   }, []);
- 
+ console.log("hello")
 
   return (
     <div>
