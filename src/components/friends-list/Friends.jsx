@@ -25,8 +25,9 @@ const Friends = () => {
       });
       setFriendData(arr);
     });
+
   }, []);
- console.log("hello")
+ console.log("delete")
 
   return (
     <div>
