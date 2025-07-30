@@ -27,7 +27,7 @@ const Friends = () => {
     });
 
   }, []);
- console.log("delete")
+ console.log("delete something")
 
   return (
     <div>
