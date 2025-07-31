@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { ColorRing } from "react-loader-spinner";
 
 const Registration = () => {
+  
   const auth = getAuth();
   const db = getDatabase();
   const navigate = useNavigate();

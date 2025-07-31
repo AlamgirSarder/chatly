@@ -82,15 +82,13 @@ const Login = () => {
       && /(?=.*[A-Z])/.test(password)
       && /(?=.*[0-9])/.test(password)
     ) {
-      // console.log("Registration Successful");
-      // setEmail("")
-      // setFullname("")
-      // setPassword("")
+      
 
       signInWithEmailAndPassword(auth, email, password)
         .then((user) => {
        
           dispatch(userLoginInfo(user))
+          
           localStorage.setItem("userLoginInfo",JSON.stringify(user))
           
             setTimeout(() => {
