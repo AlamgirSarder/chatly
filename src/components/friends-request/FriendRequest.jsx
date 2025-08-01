@@ -81,7 +81,7 @@ const accepthandle = (item) =>{
                   </Flex>
 
                   <div>
-                    <div onClick={()=>accepthandle(items)} className="w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center">
+                    <div onClick={()=>accepthandle(items)} className="w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center cursor-pointer">
                       <h2 className="font-poppins text-[20px] text-white font-semibold">
                         Accept
                       </h2>

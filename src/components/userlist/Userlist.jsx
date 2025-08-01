@@ -19,6 +19,8 @@ const Userlist = () => {
 
   const [userdetails, setUserdetails] = useState([]);
   const [friendRequest, setFriendRequest] = useState([]);
+  const [friendData, setFriendData] = useState([]);
+
   useEffect(() => {
     const usersRef = ref(db, "users/");
 
@@ -49,11 +51,7 @@ const Userlist = () => {
     });
   }, []);
 
-  console.log(friendRequest);
-
   const request = (item) => {
-    console.log(item, "Data transfer");
-
     set(push(ref(db, "friendRequest/")), {
       senderid: data.uid,
       sendername: data.displayName,
@@ -64,7 +62,16 @@ const Userlist = () => {
     });
   };
 
-
+  useEffect(() => {
+    const friendRef = ref(db, "friend");
+    onValue(friendRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().receverid + item.val().senderid);
+      });
+      setFriendData(arr);
+    });
+  }, []);
 
   return (
     <div>
@@ -98,8 +105,13 @@ const Userlist = () => {
                 </Flex>
 
                 <div className="mr-[10px]">
-                  {friendRequest.includes(data.uid + items.userid) ||
-                  friendRequest.includes(items.userid + data.uid) ? (
+                  {friendData.includes(data.uid + items.userid) ||
+                  friendData.includes(items.userid + data.uid) ? (
+                    <button className="flex bg-black rounded-[5px] justify-center items-center cursor-pointer text-white py-2 px-2 text-[12px]">
+                      Friend
+                    </button>
+                  ) : friendRequest.includes(data.uid + items.userid) ||
+                    friendRequest.includes(items.userid + data.uid) ? (
                     <button className="flex size-[30px] bg-black rounded-[5px] justify-center items-center cursor-pointer">
                       <FaMinus className="text-white" />
                     </button>
