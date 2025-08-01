@@ -5,7 +5,7 @@ import friens_image2 from "../../assets/friends2.png";
 import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
 import { useEffect, useState } from "react";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
 
@@ -28,6 +28,15 @@ const Friends = () => {
 
   }, []);
 
+
+  const blockhandle = (item)=>{
+  
+
+       set(push(ref(db, "block/")), {
+              ...item
+          })
+    
+  }
 
   return (
     <div>
@@ -59,9 +68,11 @@ const Friends = () => {
                 </Flex>
 
                 <div>
-                  <p className="font-poppins font-medium text-[#000000] opacity-50 text-[10px] mr-[10px] mt-[10px]">
-                    {/* {items.timing} */} paragraph
-                  </p>
+                    <div onClick={()=>blockhandle(items)} className="w-[50px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center cursor-pointer">
+                      <h2 className="font-poppins text-[12px] text-white font-semibold">
+                        Block
+                      </h2>
+                    </div>
                 </div>
               </Flex>
             </div>

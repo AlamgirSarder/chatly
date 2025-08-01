@@ -7,40 +7,30 @@ import friens_image4 from "../../assets/friends4.png";
 import friens_image5 from "../../assets/friends5.png";
 
 import { FaPlus } from "react-icons/fa";
+import { getDatabase, onValue, ref } from "firebase/database";
+import { useEffect, useState } from "react";
 
 const BlockUser = () => {
-  const friends_details = [
-    {
-      img: friens_image1,
-      name: "Raghav",
-      timing: "Today, 8:56pm",
-    },
-    {
-      img: friens_image2,
-      name: "Swathi",
-      timing: "Today, 2:31pm",
-    },
-    {
-      img: friens_image3,
-      name: "Kiran",
-      timing: "Yesterday, 6:22pm",
-    },
-    {
-      img: friens_image4,
-      name: "Tejeshwini C",
-      timing: "Today, 12:22pm",
-    },
-    {
-      img: friens_image5,
-      name: "Marvin McKinney",
-      timing: "Today, 8:56pm",
-    },
-       {
-      img: friens_image1,
-      name: "Raghav",
-      timing: "Today, 8:56pm",
-    },
-  ];
+
+const [blockdata, setBlockdata] = useState([]);
+const db = getDatabase();
+  useEffect(() => {
+
+    const friendRef = ref(db,"block");
+
+    onValue(friendRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach((item) => {
+          arr.push(item.val()); 
+      });
+      setBlockdata(arr);
+    });
+
+  }, []);
+
+  console.log(blockdata);
+  
+
 
   return (
     <div>
@@ -53,17 +43,17 @@ const BlockUser = () => {
         </Flex>
 
         <div className=" overflow-y-auto h-[354px] pt-[10px]">
-          {friends_details.map((items, i) => (
+          {blockdata.map((items, i) => (
             <div key={i} className="mb-[20px]">
               <Flex className="h-[54px] justify-between border-b pb-[10px] border-black/25">
                 <Flex className="items-center">
                   <div
                     className="relative w-[52px] h-[52px] rounded-full bg-cover bg-center mr-[10px]"
-                    style={{ backgroundImage: `url(${items.img})` }}
+                    style={{ backgroundImage: `url(${friens_image3})` }}
                   ></div>
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
-                      {items.name}
+                      {items.recevername}
                     </h2>
                     <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
                       {items.timing}
