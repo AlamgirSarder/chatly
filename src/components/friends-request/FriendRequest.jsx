@@ -40,8 +40,6 @@ const accepthandle = (item) =>{
       }).then(()=>{
         remove(ref(db,"friendRequest/"+ item.userid))
       })
-
-  
   
 }
 

@@ -5,7 +5,7 @@ import friens_image2 from "../../assets/friends2.png";
 import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
 import { useEffect, useState } from "react";
-import { getDatabase, onValue, push, ref, set } from "firebase/database";
+import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
 
@@ -19,8 +19,8 @@ const Friends = () => {
     onValue(friendRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-        if (data.uid == item.val().receverid || data.uid == item.val().senderid) {
-          arr.push(item.val()); 
+        if (data.uid == item.val().receverid) {
+          arr.push({...item.val(),userid:item.key});
         }
       });
       setFriendData(arr);
@@ -30,11 +30,15 @@ const Friends = () => {
 
 
   const blockhandle = (item)=>{
-  
+            
+        
+   
+   set(push(ref(db, "block/")), {
+          ...item
+      }).then(()=>{
+        remove(ref(db,"friend/"+ item.userid))
+      })
 
-       set(push(ref(db, "block/")), {
-              ...item
-          })
     
   }
 
@@ -61,7 +65,7 @@ const Friends = () => {
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
                       {data.uid == items.receverid ? items.sendername : items.recevername}
                     </h2>
-                    <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
+                    <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[11px]">
                      {data.uid == items.receverid ? items.senderemail : items.receveremail}
                     </p>
                   </div>

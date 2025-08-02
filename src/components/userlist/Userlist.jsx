@@ -20,6 +20,8 @@ const Userlist = () => {
   const [userdetails, setUserdetails] = useState([]);
   const [friendRequest, setFriendRequest] = useState([]);
   const [friendData, setFriendData] = useState([]);
+  const [Blokslist, setBlokslist] = useState([]);
+
 
   useEffect(() => {
     const usersRef = ref(db, "users/");
@@ -73,6 +75,23 @@ const Userlist = () => {
     });
   }, []);
 
+
+
+   useEffect(() => {
+    const friendRef = ref(db, "block");
+    onValue(friendRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().receverid + item.val().senderid);
+      });
+      setBlokslist(arr);
+    });
+  }, []);
+
+
+
+  
+
   return (
     <div>
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
@@ -105,7 +124,16 @@ const Userlist = () => {
                 </Flex>
 
                 <div className="mr-[10px]">
-                  {friendData.includes(data.uid + items.userid) ||
+                  {
+                     Blokslist.includes(data.uid + items.userid) ||
+                  Blokslist.includes(items.userid + data.uid) ? (
+                    <button className="flex bg-black rounded-[5px] justify-center items-center cursor-pointer text-white py-2 px-2 text-[12px]">
+                      Block
+                    </button>
+                  ) :
+                   
+
+                  friendData.includes(data.uid + items.userid) ||
                   friendData.includes(items.userid + data.uid) ? (
                     <button className="flex bg-black rounded-[5px] justify-center items-center cursor-pointer text-white py-2 px-2 text-[12px]">
                       Friend

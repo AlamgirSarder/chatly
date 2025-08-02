@@ -7,29 +7,36 @@ import friens_image4 from "../../assets/friends4.png";
 import friens_image5 from "../../assets/friends5.png";
 
 import { FaPlus } from "react-icons/fa";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, remove } from "firebase/database";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const BlockUser = () => {
 
-const [blockdata, setBlockdata] = useState([]);
+
+ const data = useSelector((state) => state.userInfo.value.user);
+
 const db = getDatabase();
+    const [blockdata, setBlockdata] = useState([]);
+
   useEffect(() => {
-
     const friendRef = ref(db,"block");
-
     onValue(friendRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-          arr.push(item.val()); 
+        if (data.uid == item.val().receverid) {
+          arr.push({...item.val(),userid:item.key});
+        }
       });
       setBlockdata(arr);
     });
 
   }, []);
 
-  console.log(blockdata);
-  
+
+  const unblockhandle = (item)=>{
+    remove(ref(db,"block/"+ item.userid))
+  }
 
 
   return (
@@ -53,7 +60,7 @@ const db = getDatabase();
                   ></div>
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
-                      {items.recevername}
+                       {data.uid == items.receverid ? items.sendername : items.recevername}
                     </h2>
                     <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
                       {items.timing}
@@ -61,9 +68,9 @@ const db = getDatabase();
                   </div>
                 </Flex>
 
-                <div className="mr-[10px]">
-                  <Flex className="size-[30px] bg-black rounded-[5px] justify-center items-center">
-                    <FaPlus className="text-white" />
+                <div onClick={()=>unblockhandle(items)} className="mr-[10px]">
+                  <Flex className=" py-2 px-2 bg-black rounded-[5px] justify-center items-center text-white cursor-pointer">
+                    Unblock
                   </Flex>
                 </div>
               </Flex>
