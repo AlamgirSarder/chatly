@@ -5,41 +5,31 @@ import group_image2 from "../../assets/group2.png";
 import group_image3 from "../../assets/group3.png";
 
 import { FiSearch } from "react-icons/fi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getDatabase, onValue, ref } from "firebase/database";
+import { useSelector } from "react-redux";
+
 const Groups = () => {
-  const friends_details = [
-    {
-      img: group_image1,
-      name: "Friends Reunion",
-      message: "Hi Guys, Wassup!?",
-    },
-    {
-      img: group_image2,
-      name: "Friends Reunion",
-      message: "Good to see you.",
-    },
 
-    {
-      img: group_image3,
-      name: "Crazy Cousins",
-      message: "What plans today?",
-    },
-    {
-      img: group_image1,
-      name: "Friends Reunion",
-      message: "Hi Guys, Wassup!?",
-    },
-  ];
-
-  useEffect(()=>{
-      console.log("this group section count");
-      
-  },[])
+       const data = useSelector((state) => state.userInfo.value.user);
 
 
+  const [groupList, setGroupList] = useState([]);
+  const db = getDatabase();
 
+  useEffect(() => {
+    const GroupRef = ref(db, "groups");
+    onValue(GroupRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach((item) => {
+       if(data.uid == item.val().GroupAdmin){
+         arr.push(item.val());
+       }
+      });
+      setGroupList(arr);
+    });
+  }, []);
 
-  
 
 
   return (
@@ -64,7 +54,7 @@ const Groups = () => {
           </Flex>
 
           <div className=" overflow-y-auto  h-[266px] pl-[20px] pt-[10px]">
-            {friends_details.map((items, i) => (
+            {groupList.map((items, i) => (
               <div
                 key={i}
                 className="relative mb-[28px] h-[70px] after:absolute after:content-[''] after:w-[365px] after:h-[1px] after:bg-[#000000]/25 after:bottom-0 after:left-[10px] "
@@ -73,24 +63,20 @@ const Groups = () => {
                   <Flex className="items-center">
                     <div
                       className="relative w-[70px] h-[70px] rounded-full bg-cover bg-center mr-[10px]"
-                      style={{ backgroundImage: `url(${items.img})` }}
-                    >
-                      {items.active && (
-                        <span className="w-4 h-4 border-2 border-white rounded-full bg-green-400 absolute bottom-0 right-0 "></span>
-                      )}
-                    </div>
+                      style={{ backgroundImage: `url(${group_image3})` }}
+                    ></div>
                     <div>
                       <h2 className="font-poppins font-semibold text-black text-[18px]">
-                        {items.name}
+                        {items.Group}
                       </h2>
                       <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[14px]">
-                        {items.message}
+                        {items.Discription}
                       </p>
                     </div>
                   </Flex>
 
                   <div>
-                    <div className="w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center">
+                    <div className="cursor-pointer w-[87px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center">
                       <h2 className="font-poppins text-[20px] text-white font-semibold">
                         Join
                       </h2>

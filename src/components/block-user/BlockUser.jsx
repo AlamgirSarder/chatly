@@ -33,11 +33,9 @@ const db = getDatabase();
 
   }, []);
 
-
   const unblockhandle = (item)=>{
     remove(ref(db,"block/"+ item.userid))
   }
-
 
   return (
     <div>
