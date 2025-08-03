@@ -49,7 +49,7 @@ if(loading){
         verify ?  <div className="p-[30px]">
         <Flex>
           <div className="mr-[43px]">
-           <Sidebar />
+           <Sidebar active="home" />
           </div>
           <div>
             <Flex className="gap-[20px]">
