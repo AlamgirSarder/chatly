@@ -10,27 +10,23 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const Groups = () => {
+  const data = useSelector((state) => state.userInfo.value.user);
 
-       const data = useSelector((state) => state.userInfo.value.user);
-
-
-  const [groupList, setGroupList] = useState([]);
   const db = getDatabase();
+  const [mygroupList, setMyGroupList] = useState([]);
 
   useEffect(() => {
     const GroupRef = ref(db, "groups");
     onValue(GroupRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-       if(data.uid == item.val().GroupAdmin){
-         arr.push(item.val());
-       }
+        if (data.uid !== item.val().GroupAdmin) {
+          arr.push(item.val());
+        }
       });
-      setGroupList(arr);
+      setMyGroupList(arr);
     });
   }, []);
-
-
 
   return (
     <div>
@@ -54,7 +50,7 @@ const Groups = () => {
           </Flex>
 
           <div className=" overflow-y-auto  h-[266px] pl-[20px] pt-[10px]">
-            {groupList.map((items, i) => (
+            {mygroupList.map((items, i) => (
               <div
                 key={i}
                 className="relative mb-[28px] h-[70px] after:absolute after:content-[''] after:w-[365px] after:h-[1px] after:bg-[#000000]/25 after:bottom-0 after:left-[10px] "

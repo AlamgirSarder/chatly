@@ -62,28 +62,23 @@ const handlesubmit = () => {
     setGroupName("");
     setGroupDiscription("");
   }
-
+  setCreates(false)
 };
 
 
-
-
-  const [mygroupList, setMyGroupList] = useState([]);
-
+  const [groupList, setGroupList] = useState([]);
   useEffect(() => {
     const GroupRef = ref(db, "groups");
     onValue(GroupRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-       if(data.uid !== item.val().GroupAdmin){
+       if(data.uid == item.val().GroupAdmin){
          arr.push(item.val());
        }
       });
-      setMyGroupList(arr);
+      setGroupList(arr);
     });
   }, []);
-
-
 
 
   return (
@@ -149,7 +144,7 @@ const handlesubmit = () => {
               </button>
             </div>
           ) : (
-            mygroupList.map((items, i) => (
+            groupList.map((items, i) => (
               <div key={i} className="mb-[26px]">
                 <Flex className="h-[54px] justify-between border-b pb-[10px] border-black/25">
                   <Flex className="items-center">

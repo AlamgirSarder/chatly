@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useSelector } from "react-redux";
 import FriendRequest from "../friends-request/FriendRequest";
-
+import { FiSearch } from "react-icons/fi";
 const Userlist = () => {
   const data = useSelector((state) => state.userInfo.value.user);
 
@@ -94,11 +94,22 @@ const Userlist = () => {
 
   return (
     <div>
+  
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
         <Flex className="items-center justify-between mb-[34px]">
           <h1 className="font-poppins font-semibold text-black text-[20px]">
             User List
           </h1>
+
+                 <div className="relative">
+                <input
+                  type="search"
+                  className=" py-[5px] pl-[10px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] w-[150px] placeholder:font-poppins placeholder:text-[12px] placeholder:text-[#3D3D3D]/35 placeholder:font-medium"
+                  placeholder="Search"
+                />
+      
+                <FiSearch className="absolute top-1/2 -translate-y-1/2 right-[23px] " />
+              </div>
           <BsThreeDotsVertical />
         </Flex>
 
