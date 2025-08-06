@@ -92,6 +92,7 @@ const Userlist = () => {
       setFilterserach([]);
     } else {
       userdetails.filter((item) => {
+      
         if (item.username.toLowerCase().includes(e.target.value.toLowerCase())) {
           arr.push(item);
           setFilterserach(arr)
@@ -135,7 +136,7 @@ const Userlist = () => {
                   ></div>
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
-                      {/* {items.name} */}
+                     
                       {items.username}
                     </h2>
                     <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[12px]">
