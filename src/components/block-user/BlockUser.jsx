@@ -24,7 +24,9 @@ const db = getDatabase();
     onValue(friendRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-        if (data.uid == item.val().receverid) {
+
+        if (data.uid == item.val().receverid ||
+          data.uid == item.val().senderid) {
           arr.push({...item.val(),userid:item.key});
         }
       });

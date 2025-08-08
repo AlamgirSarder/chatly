@@ -23,6 +23,7 @@ const Sidebar = ({active}) => {
         setTimeout(() => {
           dispatch(userLoginInfo(null));
           localStorage.removeItem("userLoginInfo");
+          localStorage.removeItem("activeMessInfo");
           navigate("/login");
         }, 1000);
       })

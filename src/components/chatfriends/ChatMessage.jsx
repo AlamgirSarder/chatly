@@ -5,45 +5,63 @@ import friens_image2 from "../../assets/friends2.png";
 import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
 import { useEffect, useState } from "react";
-import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
-import { useSelector } from "react-redux";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  remove,
+  set,
+} from "firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { activeMessInfo } from "../../slice/activeMesSlice";
 
-
-const Friends = () => {
+const ChatMessage = () => {
   const db = getDatabase();
   const data = useSelector((state) => state.userInfo.value.user);
   const [friendData, setFriendData] = useState([]);
 
   useEffect(() => {
-    const friendRef = ref(db,"friend");
+    const friendRef = ref(db, "friend");
     onValue(friendRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
-        
-        if (data.uid == item.val().receverid ||
-          data.uid == item.val().senderid) {
-          arr.push({...item.val(),userid:item.key});
+        if (
+          data.uid == item.val().receverid ||
+          data.uid == item.val().senderid
+        ) {
+          arr.push({ ...item.val(), userid: item.key });
         }
-
       });
       setFriendData(arr);
     });
-
   }, []);
 
+  const dispatch = useDispatch();
+ 
 
-  const blockhandle = (item)=>{
-            
-        
-   
-   set(push(ref(db, "block/")), {
-          ...item
-      }).then(()=>{
-        remove(ref(db,"friend/"+ item.userid))
-      })
+  const chatHandle = (item) => {
 
-    
-  }
+
+    let activeInFormation;
+
+    if (data.uid == item.senderid) {
+      activeInFormation = {
+        name: item.recevername,
+        emailid: item.receveremail,
+      };
+
+      dispatch(activeMessInfo(activeInFormation));
+      localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));
+    } else {
+      activeInFormation = {
+        name: item.sendername,
+        emailid: item.senderemail,
+      };
+      dispatch(activeMessInfo(activeInFormation));
+      localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));
+    }
+  };
 
   return (
     <div>
@@ -66,20 +84,27 @@ const Friends = () => {
                   ></div>
                   <div>
                     <h2 className="font-poppins font-semibold text-black text-[14px]">
-                      {data.uid == items.receverid ? items.sendername : items.recevername}
+                      {data.uid == items.receverid
+                        ? items.sendername
+                        : items.recevername}
                     </h2>
                     <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[11px]">
-                     {data.uid == items.receverid ? items.senderemail : items.receveremail}
+                      {data.uid == items.receverid
+                        ? items.senderemail
+                        : items.receveremail}
                     </p>
                   </div>
                 </Flex>
 
                 <div>
-                    <div onClick={()=>blockhandle(items)} className="w-[50px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center cursor-pointer">
-                      <h2 className="font-poppins text-[12px] text-white font-semibold">
-                        Block
-                      </h2>
-                    </div>
+                  <div
+                    onClick={() => chatHandle(items)}
+                    className="w-[50px] h-[30px] bg-black rounded-[5px] mr-[10px] flex justify-center items-center cursor-pointer"
+                  >
+                    <h2 className="font-poppins text-[12px] text-white font-semibold">
+                      Chat
+                    </h2>
+                  </div>
                 </div>
               </Flex>
             </div>
@@ -90,4 +115,4 @@ const Friends = () => {
   );
 };
 
-export default Friends;
+export default ChatMessage;
