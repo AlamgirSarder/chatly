@@ -41,6 +41,7 @@ const ChatMessage = () => {
  
 
   const chatHandle = (item) => {
+console.log(item);
 
 
     let activeInFormation;
@@ -49,14 +50,17 @@ const ChatMessage = () => {
       activeInFormation = {
         name: item.recevername,
         emailid: item.receveremail,
+        iid:item.receverid
       };
 
       dispatch(activeMessInfo(activeInFormation));
       localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));
     } else {
+
       activeInFormation = {
         name: item.sendername,
         emailid: item.senderemail,
+        iid:item.senderid
       };
       dispatch(activeMessInfo(activeInFormation));
       localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));

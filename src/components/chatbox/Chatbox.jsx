@@ -1,17 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import group_image3 from "../../assets/friends4.png";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Flex from "../layout/Flex";
 import { useSelector } from "react-redux";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
 const Chatbox = () => {
-  const data = useSelector((state) => state.activeInfo.value);
+  const activedata = useSelector((state) => state.activeInfo.value);
+  console.log(activedata);
 
+  const data = useSelector((state) => state.userInfo.value.user);
   const [mesg, setMesg] = useState("");
+  const db = getDatabase();
 
   const sendHandle = () => {
     console.log(mesg);
-    
+
+    set(push(ref(db, "messagebox/")), {
+      whosenderid: data.uid,
+      whosendername: data.displayName,
+      whoreceverid: activedata.iid,
+      whorecevername: activedata.name,
+      meg: mesg,
+    });
   };
+
+  const [messageList, setMessageList] = useState([]);
+  useEffect(() => {
+    const messageRef = ref(db, "messagebox/");
+    onValue(messageRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach((item) => {
+        if (
+          (data.uid == item.val().whosenderid &&
+            activedata.iid == item.val().whoreceverid) ||
+          (activedata.iid == item.val().whosenderid &&
+            data.uid == item.val().whoreceverid)
+        ) {
+          arr.push(item.val());
+        }
+      });
+      setMessageList(arr);
+    });
+  }, [activedata.iid]);
+
+  console.log(messageList);
+
   return (
     <div>
       <div className="ml-[43px] w-[500px] h-[954px] pt-[20px] pl-[22px] pb-[50px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex flex-col">
@@ -24,10 +57,10 @@ const Chatbox = () => {
               ></div>
               <div>
                 <h2 className="font-poppins font-semibold text-black text-[14px]">
-                  {data?.name}
+                  {activedata?.name}
                 </h2>
                 <p className="font-poppins font-medium text-[#4D4D4D] opacity-75 text-[11px]">
-                  {data?.emailid}
+                  {activedata?.emailid}
                 </p>
               </div>
             </Flex>
@@ -39,17 +72,22 @@ const Chatbox = () => {
         </div>
 
         <div className="flex flex-1 flex-col">
-          <div className="text-start">
-            <p className="bg-[#F1F1F1] py-3 px-5 inline-block rounded-[10px] font-poppins font-medium text-[16px]">
-              Hey, there
-            </p>
-          </div>
-
-          <div className="text-end">
-            <p className="bg-[#1E1E1E] py-3 px-5 inline-block rounded-[10px] font-poppins font-medium text-[16px] text-white">
-              Hello...
-            </p>
-          </div>
+          {/* recever */}
+          {messageList.map((item) =>
+            data.uid == item.whosenderid ? (
+              <div className="text-end mb-5">
+                <p className="bg-[#1E1E1E] py-3 px-5 inline-block rounded-[10px] font-poppins font-medium text-[16px] text-white">
+                  {item.meg}
+                </p>
+              </div>
+            ) : (
+              <div className="text-start mb-5">
+                <p className="bg-[#F1F1F1] py-3 px-5 inline-block rounded-[10px] font-poppins font-medium text-[16px]">
+                  {item.meg}
+                </p>
+              </div>
+            )
+          )}
         </div>
 
         <div>
@@ -65,6 +103,9 @@ const Chatbox = () => {
           >
             send
           </button>
+
+         
+
         </div>
       </div>
     </div>
