@@ -1,10 +1,11 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Flex from "../layout/Flex";
-import friens_image1 from "../../assets/friends1.png";
+
 import friens_image2 from "../../assets/friends2.png";
 import friens_image3 from "../../assets/friends3.png";
 import friens_image4 from "../../assets/friends4.png";
 import friens_image5 from "../../assets/friends5.png";
+
 
 import { FaPlus } from "react-icons/fa";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
