@@ -4,6 +4,7 @@ import Flex from "../layout/Flex";
 import friens_image3 from "../../assets/friends3.png";
 
 
+log
 
 import { FaPlus } from "react-icons/fa";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
