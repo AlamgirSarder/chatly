@@ -59,6 +59,7 @@ const handlesubmit = () => {
       GroupAdmin: data.uid
     });
 
+    
     setGroupName("");
     setGroupDiscription("");
   }

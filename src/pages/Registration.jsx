@@ -70,6 +70,7 @@ const Registration = () => {
     } else {
       setNamevalid(true);
     }
+    
 
     if (!password) {
       setPassworderror("Enter your password");
