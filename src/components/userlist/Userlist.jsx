@@ -22,7 +22,6 @@ const Userlist = () => {
 
   useEffect(() => {
     const usersRef = ref(db, "users/");
-
     onValue(usersRef, (snapshot) => {
       const arr = [];
       snapshot.forEach((item) => {
@@ -35,7 +34,6 @@ const Userlist = () => {
     });
   }, []);
 
-  //Data send database
 
   useEffect(() => {
     const freindRquestData = ref(db, "friendRequest");
