@@ -15,7 +15,7 @@ const Sidebar = ({active}) => {
   const dispatch = useDispatch();
 
   const data = useSelector((state) => state.userInfo.value);
-  console.log(data);
+ 
 
   const logout = () => {
     signOut(auth)

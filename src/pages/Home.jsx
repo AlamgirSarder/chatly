@@ -21,7 +21,7 @@ const auth = getAuth();
 
   const navigate = useNavigate()
   const data = useSelector(state=>state.userInfo.value)
-  console.log(data);
+
   
   const [verify,setVerify] = useState(false)
   const [loading,setLoading] = useState(true)
