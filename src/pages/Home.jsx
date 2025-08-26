@@ -66,7 +66,7 @@ if(loading){
           </div>
         </Flex>
       </div> : 
-      <p>Please verify your Email Address</p>
+      <p>please verify your email address</p>
       }
      
     </Container>
