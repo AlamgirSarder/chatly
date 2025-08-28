@@ -41,7 +41,6 @@ const ChatMessage = () => {
  
 
   const chatHandle = (item) => {
-console.log(item);
 
 
     let activeInFormation;
