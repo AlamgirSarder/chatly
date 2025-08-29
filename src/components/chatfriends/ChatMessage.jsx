@@ -55,6 +55,8 @@ const ChatMessage = () => {
       dispatch(activeMessInfo(activeInFormation));
       localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));
     } else {
+      console.log("wl");
+      
 
       activeInFormation = {
         name: item.sendername,
