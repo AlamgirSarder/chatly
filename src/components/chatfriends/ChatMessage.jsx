@@ -1,8 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Flex from "../layout/Flex";
-import friens_image1 from "../../assets/friends1.png";
-import friens_image2 from "../../assets/friends2.png";
-import friens_image3 from "../../assets/friends3.png";
+
 import friens_image4 from "../../assets/friends4.png";
 import { useEffect, useState } from "react";
 import {
@@ -55,8 +53,8 @@ const ChatMessage = () => {
       dispatch(activeMessInfo(activeInFormation));
       localStorage.setItem("activeMessInfo", JSON.stringify(activeInFormation));
     } else {
-      console.log("wl");
       
+  
 
       activeInFormation = {
         name: item.sendername,
