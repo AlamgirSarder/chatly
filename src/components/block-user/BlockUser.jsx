@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 
 const BlockUser = () => {
 
-
  const data = useSelector((state) => state.userInfo.value.user);
 
 const db = getDatabase();
