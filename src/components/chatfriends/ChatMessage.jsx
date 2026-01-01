@@ -37,10 +37,7 @@ const ChatMessage = () => {
 
   const dispatch = useDispatch();
  
-
   const chatHandle = (item) => {
-
-
     let activeInFormation;
 
     if (data.uid == item.senderid) {
@@ -70,7 +67,7 @@ const ChatMessage = () => {
     <div>
       <div className="w-[344px] h-[451px] pt-[20px] pl-[22px] pb-[70px] pr-[25px] rounded-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
         <Flex className="items-center justify-between mb-[34px]">
-          <h1 className="font-poppins font-semibold text-black text-[20px]">
+          <h1 className="font-poppins font-semibold text-black text-[21px]">
             Friends
           </h1>
           <BsThreeDotsVertical />
